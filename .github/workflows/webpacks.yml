@@ -26,7 +26,7 @@ jobs:
       with:
           fetch-depth: 0
 
-    - name: Save old version of page if actual
+    - name: Save old version if page actual
       id: old_page
       run: |  
         regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g')
@@ -63,6 +63,14 @@ jobs:
     steps:
     - name: Download and Combine Pages
       uses: actions/download-artifact@v5
+
+    - name: Create home index.html
+      run: |
+        echo: '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"> \
+          <title>JS in Browser HomeWorks</title></head><body>' > index.html
+        ls -d */ > dirlist
+        sed -E 's/(\b\w+\b)/<li><a href="\1">\1<\/a><\/li>/g' dirlist index.html
+        echo: '</body></html>' > index.html 
         
     - name: Display structure of downloaded files
       run: ls -R
