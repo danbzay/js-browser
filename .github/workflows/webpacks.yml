@@ -26,9 +26,6 @@ jobs:
       with:
           fetch-depth: 0
 
-    - name: Create home page
-      run: 
-
     - name: Save old version of page if actual
       id: old_page
       run: |  
@@ -82,10 +79,6 @@ jobs:
       uses: actions/upload-pages-artifact@v4
       with:
         path: ${{ github.workspace }}      
-        name: combined
     
     - name: Deploy to GitHub Pages
       uses: actions/deploy-pages@v4
-      id: deployment
-      with:
-        artifact_name: combined
