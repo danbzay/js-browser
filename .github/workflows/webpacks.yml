@@ -66,12 +66,12 @@ jobs:
 
     - name: Create home index.html
       run: |
-        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"> \
-          <title>JS in Browser HomeWorks</title></head><body>' > index.html
+        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">' > index.html
+        echo '<title>JS in Browser HomeWorks</title></head><body><ul>' >> index.html
         ls -d */ | sed 's/\///g' > dirlist
         cat dirlist
         sed -E 's/((^.*?$))/<li><a href="\1">\1<\/a><\/li>/g' dirlist >> index.html
-        echo '</body></html>' >> index.html 
+        echo '</ul></body></html>' >> index.html 
         cat index.html
         rm dirlist
         
