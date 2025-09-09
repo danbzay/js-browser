@@ -34,7 +34,7 @@ jobs:
       run: |  
         regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g')
         git show --dirstat HEAD        
-        git show --dirstat HEAD | grep -e $regex_page_path -e github) || 
+        git show --dirstat HEAD | grep -e $regex_page_path -e github || 
           wget -r -np $HOME_URL${{ matrix.page-name }} &&
           echo 'saved=true' >> $GITHUB_OUTPUT
 
