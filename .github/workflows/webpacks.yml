@@ -70,8 +70,9 @@ jobs:
           <title>JS in Browser HomeWorks</title></head><body>' > index.html
         ls -d */ > dirlist
         sed -E 's/((^.*?$))/<li><a href="\1">\1<\/a><\/li>/g' dirlist
-        cat dirlist > index.html
-        echo '</body></html>' > index.html 
+        cat dirlist >> index.html
+        echo '</body></html>' >> index.html 
+        rm dirlist
         
     - name: Display structure of files
       run: ls -R
