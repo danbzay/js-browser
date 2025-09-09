@@ -69,10 +69,11 @@ jobs:
         echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"> \
           <title>JS in Browser HomeWorks</title></head><body>' > index.html
         ls -d */ > dirlist
-        sed -E 's/(\b\w+\b)/<li><a href="\1">\1<\/a><\/li>/g' dirlist index.html
+        sed -E 's/((^.*?$))/<li><a href="\1">\1<\/a><\/li>/g' dirlist
+        cat dirlist > index.html
         echo '</body></html>' > index.html 
         
-    - name: Display structure of downloaded files
+    - name: Display structure of files
       run: ls -R
 
     - name: Upload Combined Pages Artifact
