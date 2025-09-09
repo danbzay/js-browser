@@ -3,12 +3,9 @@ name: Multiple Homeworks Publishing
 on:
   push:
     branches: [ "main" ]
-    paths: 
-      - '.github/**'
-      - '9-JavaScript-browser/**'
 
 env:
-  HOME_URL: 'https://danbzay.github.io/netology/'
+  HOME_URL: 'https://danbzay.github.io/js-browser/'
       
 jobs:
   build:
@@ -17,10 +14,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - page-path: '9-JavaScript-browser/2-DOM/hit-game/'
+          - page-path: '2-DOM/hit-game/'
             page-name: 'hit-game'  
             node-version: 22.x
-          - page-path: '9-JavaScript-browser/2-DOM/loading-sorting/'
+          - page-path: '2-DOM/loading-sorting/'
             page-name: 'loading-sorting'
             node-version: 22.x
 
@@ -37,7 +34,7 @@ jobs:
       run: |  
         regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g')
         git show --dirstat HEAD        
-        git show --dirstat HEAD | grep ($regex_page_path|github) || 
+        git show --dirstat HEAD | grep -e $regex_page_path -e github) || 
           wget -r -np $HOME_URL${{ matrix.page-name }} &&
           echo 'saved=true' >> $GITHUB_OUTPUT
 
