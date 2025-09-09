@@ -66,11 +66,11 @@ jobs:
 
     - name: Create home index.html
       run: |
-        echo: '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"> \
+        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"> \
           <title>JS in Browser HomeWorks</title></head><body>' > index.html
         ls -d */ > dirlist
         sed -E 's/(\b\w+\b)/<li><a href="\1">\1<\/a><\/li>/g' dirlist index.html
-        echo: '</body></html>' > index.html 
+        echo '</body></html>' > index.html 
         
     - name: Display structure of downloaded files
       run: ls -R
