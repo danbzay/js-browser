@@ -68,7 +68,7 @@ jobs:
       run: |
         echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"> \
           <title>JS in Browser HomeWorks</title></head><body>' > index.html
-        ls -d */ > sed '/\//' > dirlist
+        ls -d */ | sed 's/\///g' > dirlist
         cat dirlist
         sed -E 's/((^.*?$))/<li><a href="\1">\1<\/a><\/li>/g' dirlist >> index.html
         echo '</body></html>' >> index.html 
