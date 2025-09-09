@@ -38,14 +38,14 @@ jobs:
         regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g')
         git show --dirstat HEAD        
         git show --dirstat HEAD | grep ($regex_page_path|github) || 
-          wget -r -np ${{ HOME_URL }}${{ matrix.page-name }} &&
+          wget -r -np $HOME_URL${{ matrix.page-name }} &&
           echo 'saved=true' >> $GITHUB_OUTPUT
 
     - name: Check page existance if not modified
       id: check_page_exist
       if: ${{steps.old_page.outputs.saved != true }}
       run: | 
-        wget -r -np ${{ HOME_URL }}${{ matrix.page-name }} ||           
+        wget -r -np $HOME_URL${{ matrix.page-name }} ||           
           echo 'exist=false' >> $GITHUB_OUTPUT
 
     - name: Use Node.js ${{ matrix.node-version }}
