@@ -35,15 +35,9 @@ jobs:
         regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g')
         git show --dirstat HEAD        
         git show --dirstat HEAD | grep -e $regex_page_path -e github || 
-          wget -r -np $HOME_URL${{ matrix.page-name }} &&
+          wget -r -np -P ${{ matrix.page-path }}dist $HOME_URL${{ matrix.page-name }} &&
           echo 'saved=true' >> $GITHUB_OUTPUT
-
-    - name: Check page existance if not modified
-      id: check_page_exist
-      if: ${{steps.old_page.outputs.saved != true }}
-      run: | 
-        wget -r -np $HOME_URL${{ matrix.page-name }} ||           
-          echo 'exist=false' >> $GITHUB_OUTPUT
+        echo 'saved = '${{ steps.old_page.outputs.saved }}
 
     - name: Use Node.js ${{ matrix.node-version }}
       if: ${{steps.old_page.outputs.saved != true }}
@@ -60,13 +54,10 @@ jobs:
         npx webpack
 
     - name: Upload Page Artifact
-      if: ${{steps.old_page.outputs.saved != true }}
       uses: actions/upload-artifact@v4
       with:
         path: ${{ matrix.page-path }}dist 
         name: ${{ matrix.page-name }}
-        retention-days: 30
-        overwrite: true
           
   deploy:
     needs: build
