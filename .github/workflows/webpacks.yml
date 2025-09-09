@@ -55,23 +55,12 @@ jobs:
       with:
         path: ${{ matrix.page-path }}dist 
         name: ${{ matrix.page-name }}
-          
-  deploy:
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
+  combine:
     runs-on: ubuntu-latest
-    
+    needs: build
+   
     steps:
-    - name: Display structure of files
-      run: ls -R
-    
     - name: Download and Combine Pages
       uses: actions/download-artifact@v5
         
@@ -79,9 +68,26 @@ jobs:
       run: ls -R
 
     - name: Upload Combined Pages Artifact
+      id: deployment
       uses: actions/upload-pages-artifact@v4
       with:
         path: ${{ github.workspace }}      
+          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: combine
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
+    steps:
+    - name: Display structure of files
+      run: ls -R
+            
     - name: Deploy to GitHub Pages
+      id: deployment
       uses: actions/deploy-pages@v4
