@@ -1,4 +1,4 @@
-name: Multiple Homeworks Publishing
+name: JavaScript in Browser Homeworks
 
 on:
   push:
