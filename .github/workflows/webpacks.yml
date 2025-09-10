@@ -37,19 +37,19 @@ jobs:
             echo 'grep status='$?; 
             wget -r --no-parent --no-host-directories --cut-dirs=2 -P ./${{ matrix.page-path }}dist $HOME_URL/${{ matrix.page-name }};
             mv ./${{ matrix.page-path }}dist/${{ matrix.page-name }} ./${{ matrix.page-path }}dist/index.html
-          ) && (echo 'wget status='$?; echo 'saved=true' >> $GITHUB_OUTPUT))
+          ) && (echo 'wget status='$?; echo 'saved=1' >> $GITHUB_OUTPUT))
         ls -R
 
     - name: Use Node.js ${{ matrix.node-version }}
-      if: steps.old_page.outputs.saved != true
+      if: steps.old_page.outputs.saved != 1
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
    
     - name: Build
-      if: steps.old_page.outputs.saved != true
+      if: steps.old_page.outputs.saved != 1
       run: |
-        echo 'saved='${{ steps.old_page.outputs.saved }}
+        echo 'saved=='${{ steps.old_page.outputs.saved }}
         cd ${{ matrix.page-path }}        
         npm install
         npx eslint
