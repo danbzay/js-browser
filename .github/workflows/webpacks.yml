@@ -17,9 +17,9 @@ jobs:
           - page-path: '2-DOM/hit-game/'
             page-name: 'hit-game'  
             node-version: 22.x
-          - page-path: '2-DOM/loading-sorting/'
-            page-name: 'loading-sorting'
-            node-version: 22.x
+#          - page-path: '2-DOM/loading-sorting/'
+#            page-name: 'loading-sorting'
+#            node-version: 22.x
 
     steps:
     - uses: actions/checkout@v4
@@ -30,7 +30,7 @@ jobs:
       id: old_page
       run: |  
         regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g')
-        git show --dirstat HEAD --name-only       
+        echo 'regex_page_path='$regex_page_path
         git show --dirstat --name-only HEAD | grep -e $regex_page_path -e workflows || 
           ((echo 'grep status='$?; wget -r -np -P ${{ matrix.page-path }}dist $HOME_URL${{ matrix.page-name }}) &&
           (echo 'wget status='$?; echo 'saved=true' >> $GITHUB_OUTPUT))
