@@ -17,9 +17,9 @@ jobs:
           - page-path: '2-DOM/hit-game/'
             page-name: 'hit-game'  
             node-version: 22.x
-#          - page-path: '2-DOM/loading-sorting/'
-#            page-name: 'loading-sorting'
-#            node-version: 22.x
+          - page-path: '2-DOM/loading-sorting/'
+            page-name: 'loading-sorting'
+            node-version: 22.x
 
     steps:
     - uses: actions/checkout@v4
