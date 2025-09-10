@@ -34,8 +34,9 @@ jobs:
         echo 'regex_page_path='$regex_page_path
         echo ${{ matrix.page-path }}dist $HOME_URL/${{ matrix.page-name }}
         git show --dirstat --name-only HEAD | grep -e $regex_page_path -e workflows || 
-          ((echo 'grep status='$?; wget -r -P ${{ matrix.page-path }}dist $HOME_URL/${{ matrix.page-name }}) &&
+          ((echo 'grep status='$?; wget -r -np -P ${{ matrix.page-path }}dist $HOME_URL/${{ matrix.page-name }}) &&
           (echo 'wget status='$?; echo 'saved=true' >> $GITHUB_OUTPUT))
+        ls -R
 
     - name: Use Node.js ${{ matrix.node-version }}
       if: ${{steps.old_page.outputs.saved != true }}
