@@ -29,13 +29,11 @@ jobs:
     - name: Save old version if page actual
       id: old_page
       run: |  
-        echo 'saved=false' >> $GITHUB_OUTPUT
         regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g')
-        git show --dirstat HEAD        
-        git show --dirstat HEAD | grep -e $regex_page_path -e github || 
+        git show --dirstat HEAD --name-only       
+        git show --dirstat --name-only HEAD | grep -e $regex_page_path -e github || 
           ((echo 'grep status='$?; wget -r -np -P ${{ matrix.page-path }}dist $HOME_URL${{ matrix.page-name }}) &&
           (echo 'wget status='$?; echo 'saved=true' >> $GITHUB_OUTPUT))
-        echo 'saved = '${{ steps.old_page.outputs.saved }}
 
     - name: Use Node.js ${{ matrix.node-version }}
       if: ${{steps.old_page.outputs.saved != true }}
@@ -46,6 +44,7 @@ jobs:
     - name: Build
       if: ${{steps.old_page.outputs.saved != true }}
       run: |
+        echo save 'saved='${{ steps.old_page.outputs.saved }}
         cd ${{ matrix.page-path }}        
         npm install
         npx eslint
