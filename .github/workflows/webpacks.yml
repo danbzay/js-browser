@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 env:
-  HOME_URL: 'https://danbzay.github.io/js-browser/'
+  HOME_URL: 'https://danbzay.github.io/js-browser'
       
 jobs:
   build:
@@ -28,11 +28,13 @@ jobs:
 
     - name: Save old version if page actual
       id: old_page
+      continue-on-error: true
       run: |  
         regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g')
         echo 'regex_page_path='$regex_page_path
+        echo ${{ matrix.page-path }}dist $HOME_URL/${{ matrix.page-name }}
         git show --dirstat --name-only HEAD | grep -e $regex_page_path -e workflows || 
-          ((echo 'grep status='$?; wget -r -np -P ${{ matrix.page-path }}dist $HOME_URL${{ matrix.page-name }}) &&
+          ((echo 'grep status='$?; wget -r -np -P ${{ matrix.page-path }}dist $HOME_URL/${{ matrix.page-name }}) &&
           (echo 'wget status='$?; echo 'saved=true' >> $GITHUB_OUTPUT))
 
     - name: Use Node.js ${{ matrix.node-version }}
