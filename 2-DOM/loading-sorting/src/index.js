@@ -4,10 +4,9 @@ const moviesTable = document.createElement('table');
 
 for (const movie of movies) {
   const tr = document.createElement('tr');
-  tr.dataset.id = movie.id;
-  tr.dataset.title = movie.title;
-  tr.dataset.imdb = movie.imdb;
-  tr.dataset.year = movie.year;
+  for (key in movie) {
+    tr.dataset[key] = movie[key];
+  }
   let td = document.createElement('td');
   td.textContent = '#' + movie.id;
   tr.appendChild(td);
@@ -18,7 +17,7 @@ for (const movie of movies) {
   td.textContent = '(' + movie.year + ')';
   tr.appendChild(td);
   td = document.createElement('td');
-  td.textContent = 'imdb' + movie.imdb;
+  td.textContent = 'imdb' + movie.imdb.toFixed(2);
   tr.appendChild(td);
   moviesTable.appendChild(tr);
 }
@@ -40,7 +39,7 @@ setInterval( () => {
     ' order: ' + ((sortCounter % 2 == 0) ? 'ascending' : 'descending'));
   document.body.appendChild(p);
   sortCounter++;
-}, 5000)
+}, 2000)
 
 function compareRows(a, b) {
   const aString = a.dataset[dataKeys[Math.floor(sortCounter/2)]];    
