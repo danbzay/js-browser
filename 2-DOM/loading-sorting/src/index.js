@@ -4,7 +4,7 @@ const moviesTable = document.createElement('table');
 
 for (const movie of movies) {
   const tr = document.createElement('tr');
-  for (key in movie) {
+  for (let key in movie) {
     tr.dataset[key] = movie[key];
   }
   let td = document.createElement('td');
