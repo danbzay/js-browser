@@ -79,7 +79,7 @@ jobs:
         ls -d */ | sed 's/\///g' > pages
         echo 'pages:';
         cat pages
-        cat */index.html | sed -E -n 's/.*<title>(.*?)<\/title>.*/\1/g' > titles
+        cat */index.html | sed -E -e '/title/!d' -e 's/.*<title>(.*?)<\/title>.*/\1/g' > titles
         echo 'titles:';
         cat titles
         paste -d $'\n' pages titles > mixed
