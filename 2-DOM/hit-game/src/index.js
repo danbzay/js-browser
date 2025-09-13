@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   const head = document.createElement("img");
   head.classList.add("goblin");
-  head.setAttribute("src","img/goblin.png");
+  head.setAttribute("src","./img/goblin.png");
   head.setAttribute("alt","G");
   setInterval( () => {
     let goblinHoleIndex = Math.floor(Math.random()*15);
