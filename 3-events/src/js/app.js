@@ -1,4 +1,4 @@
-import { HitGame } from './components/hit-game/hit-game/';
+import { HitGame } from '../components/hit-game/hit-game';
 
 const board = document.createElement('div');
 document.body.appendChild(board);
