@@ -1,4 +1,5 @@
 import "./css/style.css";
+import goblinImage from './img/goblin.png';
 
 document.addEventListener("DOMContentLoaded", () => {
   const board = document.querySelector(".board");
@@ -8,13 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
     hole.setAttribute("data-index", i);
     board.appendChild(hole);
   }
-  const head = document.createElement("img");
-  head.classList.add("goblin");
-  head.setAttribute("src","img/goblin.png");
-  head.setAttribute("alt","G");
+  const goblin = document.createElement("img");
+  goblin.classList.add("goblin");
+  goblin.src = goblinImage;
+  goblin.setAttribute("alt","G");
   setInterval( () => {
     let goblinHoleIndex = Math.floor(Math.random()*15);
     board.querySelector(`[data-index="${ goblinHoleIndex }"]`)
-    .appendChild(head);
+    .appendChild(goblin);
   }, 1000);
 });

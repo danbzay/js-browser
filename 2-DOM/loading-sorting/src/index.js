@@ -1,50 +1,43 @@
 import movies from './movies.json';
 
-const moviesTable = document.createElement('table');
-
+const moviesTable = document.querySelector('table.movies');
 for (const movie of movies) {
   const tr = document.createElement('tr');
   tr.dataset.id = movie.id;
+  tr.appendChild(document.createElement('td'))
+    .appendChild(document.createTextNode('#' + movie.id));
   tr.dataset.title = movie.title;
-  tr.dataset.imdb = movie.imdb;
+  tr.appendChild(document.createElement('td'))
+    .appendChild(document.createTextNode(movie.title));
   tr.dataset.year = movie.year;
-  let td = document.createElement('td');
-  td.textContent = '#' + movie.id;
-  tr.appendChild(td);
-  td = document.createElement('td');
-  td.textContent = movie.title;
-  tr.appendChild(td);
-  td = document.createElement('td');
-  td.textContent = '(' + movie.year + ')';
-  tr.appendChild(td);
-  td = document.createElement('td');
-  td.textContent = 'imdb' + movie.imdb;
-  tr.appendChild(td);
+  tr.appendChild(document.createElement('td'))
+    .appendChild(document.createTextNode('(' + movie.year + ')'));
+  tr.dataset.imdb = movie.imdb;
+  tr.appendChild(document.createElement('td'))
+    .appendChild(document.createTextNode('imdb' + movie.imdb.toFixed(2)));
   moviesTable.appendChild(tr);
 }
-document.body.appendChild(moviesTable);
 
-
-let sortCounter = 0;
-const rows = [...moviesTable.querySelectorAll('tr')];
+let sortOrder = 0;
+let sortColumn = 0;
+const rows = [...moviesTable.querySelectorAll('table > tr')];
 const dataKeys = Object.keys(rows[0].dataset);
-let p = document.createElement('p');
+const ths = moviesTable.querySelectorAll('th');
 
 setInterval( () => {
-  sortCounter %= 8;
+  ths[sortColumn].textContent = ths[sortColumn].textContent.replace(/(\u2193|\u2191)/, '');
+  sortOrder = (sortOrder + 1) % 2;
+  sortColumn = (sortColumn + sortOrder) % 4;
+  ths[sortColumn].textContent += sortOrder == 0 ? '\u2191' : '\u2193';
   rows.sort(compareRows);  
   for ( const row in rows ) {
     moviesTable.appendChild(rows[row]);
   }
-  p.textContent = ('Sorting field: ' + dataKeys[Math.floor(sortCounter/2)] + 
-    ' order: ' + ((sortCounter % 2 == 0) ? 'ascending' : 'descending'));
-  document.body.appendChild(p);
-  sortCounter++;
-}, 5000)
+}, 2000)
 
 function compareRows(a, b) {
-  const aString = a.dataset[dataKeys[Math.floor(sortCounter/2)]];    
-  const bString = b.dataset[dataKeys[Math.floor(sortCounter/2)]];
+  const aString = a.dataset[dataKeys[sortColumn]];    
+  const bString = b.dataset[dataKeys[sortColumn]];
   //compare strings with removed numbers
   let result = aString.replace(/[\d.]/g, '')
     .localeCompare(bString.replace(/[\d.]/g, ''));
@@ -52,6 +45,6 @@ function compareRows(a, b) {
   if (result == 0) {
     result = Number(aString) - Number(bString);
   }
-  return (1 - 2*(sortCounter%2)) * result;
+  return (1 - 2 * sortOrder) * result;
 }
 
