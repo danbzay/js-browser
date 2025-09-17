@@ -2,7 +2,7 @@ name: JavaScript in Browser Homeworks
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main" ]    
 
 env:
   HOME_URL: 'https://danbzay.github.io/js-browser'
@@ -19,6 +19,9 @@ jobs:
             node-version: 22.x
           - page-path: '2-DOM/loading-sorting/'
             page-name: 'loading-sorting'
+            node-version: 22.x
+          - page-path: '2-DOM/loading-sorting-in-memory/'
+            page-name: 'loading-sorting-in-memory'
             node-version: 22.x
 
     steps:
@@ -73,12 +76,19 @@ jobs:
       run: |
         echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">' > index.html
         echo '<title>JS in Browser HomeWorks</title></head><body><ul>' >> index.html
-        ls -d */ | sed 's/\///g' > dirlist
-        cat dirlist
-        sed -E 's/((^.*?$))/<li><a href="\1">\1<\/a><\/li>/g' dirlist >> index.html
+        ls -d */ | sed 's/\///g' > pages
+        echo 'pages:';
+        cat pages
+        cat */index.html | sed -E -e '/title/!d' -e 's/.*<title>(.*?)<\/title>.*/\1/g' > titles
+        echo 'titles:';
+        cat titles
+        paste -d $'\n' pages titles > mixed
+        echo 'mixed:';
+        cat mixed
+        sed -E -e '1~2s/(^.*?$)/<li><a href="\1">/g' -e '2~2s/(^.*?$)/\1<\/a><\/li>/g' mixed >> index.html
         echo '</ul></body></html>' >> index.html 
         cat index.html
-        rm dirlist
+        rm pages titles mixed
         
     - name: Display structure of files
       run: ls -R
