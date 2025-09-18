@@ -33,15 +33,14 @@ jobs:
       id: old_page
       continue-on-error: true
       run: |  
-        regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g')
-        echo 'regex_page_path='$regex_page_path
-        echo ${{ matrix.page-path }}dist $HOME_URL/${{ matrix.page-name }}
+        regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g');
+        git show --dirstat --name-only HEAD; 
         git show --dirstat --name-only HEAD | grep -e $regex_page_path -e workflows || ((
             echo 'grep status='$?; 
             wget -r --no-parent --no-host-directories --cut-dirs=2 -P ./${{ matrix.page-path }}dist $HOME_URL/${{ matrix.page-name }};
             mv ./${{ matrix.page-path }}dist/${{ matrix.page-name }} ./${{ matrix.page-path }}dist/index.html
-          ) && (echo 'wget status='$?; echo 'saved=1' >> $GITHUB_OUTPUT))
-        ls -R
+          ) && (echo 'wget status='$?; echo 'saved=1' >> $GITHUB_OUTPUT));
+        ls -R;
 
     - name: Use Node.js ${{ matrix.node-version }}
       if: steps.old_page.outputs.saved != 1
