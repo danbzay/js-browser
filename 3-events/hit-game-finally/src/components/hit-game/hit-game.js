@@ -31,8 +31,8 @@ export class HitGame {
     this._goblinHead = new Image();
     this._goblinHead.classList.add("goblin");
     this._goblinHead.src = goblinImage;
-    this._board.addEventListener('click', this.onBoardClick());
-    setInterval( () => {
+    this._board.addEventListener('click', this.onBoardClick);
+    this._goblinIntervalId = setInterval( () => {
       let goblinHoleIndex = Math.floor(Math.random()*15);
       this._board.querySelector(`[data-index="${ goblinHoleIndex }"]`)
       .appendChild(this._goblinHead);
@@ -40,18 +40,17 @@ export class HitGame {
   }
 
   onBoardClick() {
+    console.log('onBoardCalled');
     this._board.classList.toggle('hammer-down');
-    if(this._timeout) {
-      return;
-    }
     this._timeout = setTimeout(() => {
       this._board.classList.toggle('hammer-down');
       if (this._goblinHead.matches(':hover')) {
-        this.hits++;
+        this._hits++;
       } else {
         this._miss();
       }
-    }, 200);
+      clearTimeout(this._timeout);
+    }, 100);
   }
 
   _miss() {
@@ -64,11 +63,13 @@ export class HitGame {
 
   _gameOver() {
     this._goblinHead.remove();
-    this._board.removeEventListener('click', this.oBoardClick);
-    this._gameOver = document.createElement('div')
-      .appendTextNode(`!!!GAME OVER!!! \n You hit ${this._hits} times`);
-    this._gameOver.classList.add('game-over');
-    this._board.appendChild(this.gameOver);
+    clearInterval(this._goblinIntervalId);
+    this._board.removeEventListener('click', this.onBoardClick);
+    this._gameOverDiv = document.createElement('div');
+    this._gameOverDiv.appendChild(document.createTextNode(
+      `!!!GAME OVER!!! \n You hit ${this._hits} time${this._hits==1?'':'s'}`));
+    this._gameOverDiv.classList.add('game-over');
+    this._board.appendChild(this._gameOverDiv);
 
   }
 

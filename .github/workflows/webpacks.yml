@@ -17,12 +17,19 @@ jobs:
           - page-path: '2-DOM/hit-game/'
             page-name: 'hit-game'  
             node-version: 22.x
+            package-manager: 'npm'
           - page-path: '2-DOM/loading-sorting/'
             page-name: 'loading-sorting'
             node-version: 22.x
+            package-manager: 'npm'
           - page-path: '2-DOM/loading-sorting-in-memory/'
             page-name: 'loading-sorting-in-memory'
             node-version: 22.x
+            package-manager: 'npm'
+          - page-path: '3-events/hit-game-finally/'
+            page-name: 'hit-game-finally'
+            node-version: 22.x
+            package-manager: 'yarn'
 
     steps:
     - uses: actions/checkout@v4
@@ -48,14 +55,22 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
    
-    - name: Build
-      if: steps.old_page.outputs.saved != 1
+    - name: npm build
+      if: ${{ matrix.package-manager == 'npm' && steps.old_page.outputs.saved != 1 }}
       run: |
-        #echo 'saved=='${{ steps.old_page.outputs.saved }}
         cd ${{ matrix.page-path }}        
         npm install
         npx eslint
         npx webpack
+
+    - name: yarn build
+      if: ${{ matrix.package-manager == 'yarn' && steps.old_page.outputs.saved != 1 }}
+      run: |
+        cd ${{ matrix.page-path }}        
+        yarn install
+        yarn eslint
+        yarn webpack
+
 
     - name: Upload Page Artifact
       uses: actions/upload-artifact@v4
