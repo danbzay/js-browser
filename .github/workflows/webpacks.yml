@@ -52,7 +52,7 @@ jobs:
     - name: Build
       if: steps.old_page.outputs.saved != 1
       run: |
-        echo 'saved=='${{ steps.old_page.outputs.saved }}
+        #echo 'saved=='${{ steps.old_page.outputs.saved }}
         cd ${{ matrix.page-path }}        
         npm install
         npx eslint
