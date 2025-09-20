@@ -1,0 +1,39 @@
+.app {
+  width: 300px;
+  border: 1px solid lightgray;
+  font-size: 14px;
+}
+.app h1 {
+  font-size: 14px;
+  color: gray;
+}
+.app ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+.app ul li {
+  border: 1px solid lightgray;
+  border-radius:7px;
+  padding: 5px;
+  width: 260px;
+  padding-right: 15px;
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+.pinned-tasks-list li {
+  background-image: url("data:image/svg+xml, \
+    %3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E \
+    %3Ccircle cx='12' cy='12' r='10' \
+      fill='none' stroke='gray' stroke-width='1'/%3E \
+    %3Cpolyline points='4, 4 12, 20 20, 4' \
+      fill='none' stroke='gray' stroke-width='1'/%3E \
+    %3C/svg%3E");
+}
+.all-tasks-list li {
+  background-image: url("data:image/svg+xml, \
+    %3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E \
+    %3Ccircle \
+      cx='12' cy='12' r='10' fill='none' stroke='gray' stroke-width='1'/%3E \
+    %3C/svg%3E");
+}
+
