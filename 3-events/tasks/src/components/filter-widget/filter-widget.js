@@ -14,6 +14,8 @@ export class FilterWidget {
     this._nameErrorNode = this._element.querySelector('span.hidden');
 
     this._filterText.addEventListener('input', this.onFilter);
+    this._filterText.value = '';
+
     this._element.addEventListener('submit', this.onSubmit);
   }
 
@@ -38,6 +40,7 @@ export class FilterWidget {
     }
     this._nameErrorNode.classList.add('hidden');
     this._submitHandler(this._filterText.value);
+    this._filterText.value = '';
   }
 
 }

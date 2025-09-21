@@ -1,5 +1,13 @@
 import './task-list.css';
 
+class Task {
+  constructor(name) {
+    this.node = document.createElement('li');
+    this.node.appendChild(document.createTextNode(name));
+    this.pinned = false;
+  }
+}
+
 export class TaskList {
   constructor(element) {
     if(typeof element === 'string') {
@@ -12,64 +20,62 @@ export class TaskList {
     this.onPinTaskClick = this.onPinTaskClick.bind(this);
     
     this._allTasksList = element.querySelector('.all-tasks-list');
+    this._noTasksFound = this._allTasksList.querySelector('span');
     this._pinnedTasksList = element.querySelector('.pinned-tasks-list');
+    this._noPinnedTasksFound = this._pinnedTasksList.querySelector('span');
     
-    this._allTasks = [];
-    this._pinnedTasks = [];
+    this._tasks = [];
+    this._inputText ='';
 
     this._allTasksList.addEventListener('click', this.onAllTaskClick);
     this._pinnedTasksList.addEventListener('click', this.onPinTaskClick);
   }
 
   filterHandler(text) {
-    this._renderItems(this._allTasks.filter((task) => {
+    this._renderItems(this._allTasksList, this._tasks.filter((task) => {
+      if (task.pinned === true) return;
       const clean = text.trim().toLowerCase();
-      const taskName = task.textContent.toLowerCase();
+      const taskName = task.node.textContent.toLowerCase();
       return taskName.includes(clean);
+      this._inputText = text;
     }));
   }
 
-  submitHandler(text) {
-    const task = this._allTasksList
-      .appendChild(document.createElement('li'));
-    task.appendChild(document.createTextNode(text));
-    this._allTasks.push(task);
-  }
-
-  _renderItems(items) {
-    this._allTasksList.querySelectorAll('li').forEach((e) => {
+  _renderItems(list, items) {
+    if (!items.length) {
+      list.querySelector('span').classList.remove('hidden');
+      return;
+    }
+    list.querySelector('span').classList.add('hidden');
+    list.querySelectorAll('li').forEach((e) => {
       e.classList.add('hidden');
     });
-    if (!items || !this._allTasksList) return;
-    items.forEach(e => e.classList.remove('hidden'));
+    items.forEach(t => t.node.classList.remove('hidden'));
   }
 
-  _pinTask(task) {
-    this._pinnedTasks.push(task);
-    this._allTasks.splice(this._allTasks.findIndex(i => i === task));
-    this._pinnedTasksList.appendChild(task);
-  }
-
-  _unpinTask(task) {
-    this._allTasks.push(task);
-    this._pinnedTasks.splice(this._pinnedTasks.findIndex(i => i === task));
-    this._allTasksList.appendChild(task);
+  submitHandler(text) {
+    const task = new Task(text);
+    this._allTasksList.appendChild(task.node);
+    this._tasks.push(task);
+    this._inputText = '';
   }
 
   onAllTaskClick(e) {
-
-    console.log(e.currentTarget);
-    console.log(e.target);
-      
-    this._pinTask(e.target);
+    if (e.target.tagName != 'LI') return;
+    const task = this._tasks.find(t => t.node == e.target);
+    task.pinned = true;
+    this._pinnedTasksList.appendChild(task.node);
+    this._renderItems(this._pinnedTasksList, this._tasks.filter(t => t.pinned));
+    this.filterHandler(this._inputText);
   }
 
   onPinTaskClick(e) {
-    console.log(e.currentTarget);
-    console.log(e.target);
-
-    this._unpinTask(e.target);
-
+    if (e.target.tagName != 'LI') return;
+    const task = this._tasks.find(t => t.node == e.target);
+    task.pinned = false;
+    this._allTasksList.appendChild(task.node);
+    this._renderItems(this._pinnedTasksList, this._tasks.filter(t => t.pinned));
+    this.filterHandler(this._inputText);
   }
   
 }
