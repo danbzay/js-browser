@@ -30,6 +30,16 @@ jobs:
             page-name: 'hit-game-finally'
             node-version: 22.x
             package-manager: 'yarn'
+          - page-path: '3-events/tasks/'
+            page-name: 'tasks'
+            node-version: 22.x
+            package-manager: 'yarn'
+          - page-path: '3-events/image-gallery/'
+            page-name: 'image-gallery'
+            node-version: 22.x
+            package-manager: 'yarn'
+
+
 
     steps:
     - uses: actions/checkout@v4

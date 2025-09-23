@@ -36,20 +36,20 @@ export class TaskList {
       if (task.pinned === true) return;
       const clean = text.trim().toLowerCase();
       const taskName = task.node.textContent.toLowerCase();
-      return taskName.includes(clean);
-      this._inputText = text;
+      this._inputText = clean;
+      return taskName.startsWith(clean);
     }));
   }
 
   _renderItems(list, items) {
-    if (!items.length) {
-      list.querySelector('span').classList.remove('hidden');
-      return;
-    }
     list.querySelector('span').classList.add('hidden');
     list.querySelectorAll('li').forEach((e) => {
       e.classList.add('hidden');
     });
+    if (!items.length) {
+      list.querySelector('span').classList.remove('hidden');
+      return;
+    }
     items.forEach(t => t.node.classList.remove('hidden'));
   }
 

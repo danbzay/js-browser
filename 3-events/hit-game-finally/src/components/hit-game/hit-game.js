@@ -40,15 +40,14 @@ export class HitGame {
   }
 
   onBoardClick() {
-    console.log('onBoardCalled');
     this._board.classList.toggle('hammer-down');
+    if (this._goblinHead.matches(':hover')) {
+      this._hits++;
+    } else {
+      this._miss();
+    }
     this._timeout = setTimeout(() => {
       this._board.classList.toggle('hammer-down');
-      if (this._goblinHead.matches(':hover')) {
-        this._hits++;
-      } else {
-        this._miss();
-      }
       clearTimeout(this._timeout);
     }, 100);
   }
