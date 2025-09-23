@@ -33,6 +33,7 @@
   display: inline-block;
   position: relative;
   margin: 2em;
+  border: 1px solid lightgrey;
 }
 .image-list li > * {
   display: block;

@@ -28,35 +28,30 @@ export class ImageGallery {
         'А как мы ее без ссылки будем показывать?';
       return;
     }
-    const result = this._addImageToList(); 
-    if (result == 'Not Found') {
-      this._messageArea.textContent = 
-        'По данной вами ссылке изображение недоступно';
-      this._inputForm.link.select();
-      return;
-    }
-    if (result == 'OK') {
-      this._messageArea.textContent = 
-        'Возможно, ваша картинка успешно добавлена';
-      this._inputForm.title.value = '';
-      this._inputForm.link.value = '';
-      return;
-    }
+    this._addImageToList(); 
   }
   
   _addImageToList() {
     const img = document.createElement('img');
-    img.addEventListener('error', e => 'NotFound');
+    img.addEventListener('load', () => {
+      const imgX = document.createElement('div');
+      imgX.className = 'remover';
+      imgX.addEventListener('click', e => e.target.parentElement.remove());
+      const li = document.createElement('li');
+      li.appendChild(img);
+      li.appendChild(document.createElement('span'))
+        .appendChild(document.createTextNode(this._inputForm.title.value));
+      li.appendChild(imgX);
+      this._imageList.appendChild(li);
+      this._messageArea.textContent = 
+        'Возможно, ваша картинка успешно добавлена';
+      this._inputForm.title.value = '';
+      this._inputForm.link.value = '';
+    });
+    img.addEventListener('error', () => {
+      this._messageArea.textContent = 'Неверный URL изображения';
+      this._inputForm.link.select();
+    });
     img.setAttribute('src', this._inputForm.link.value);
-    const imgX = document.createElement('div');
-    imgX.className = 'remover';
-    imgX.addEventListener('click', e => e.target.parentElement.remove());
-    const li = document.createElement('li');
-    li.appendChild(img);
-    li.appendChild(document.createElement('span'))
-      .appendChild(document.createTextNode(this._inputForm.title.value));
-    li.appendChild(imgX);
-    this._imageList.appendChild(li);
-    return 'OK';
   }
 } 
