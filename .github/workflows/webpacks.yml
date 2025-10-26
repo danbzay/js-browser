@@ -69,17 +69,12 @@ jobs:
     - name: Build with npm
       if: ${{ matrix.page.manager == 'npm' && matrix.page.republish == false }} 
       run: |
-        echo ${{  matrix.page.manager == 'npm' }};
-        echo ${{  matrix.page.republish == false }}; 
-        echo ${{ matrix.page.manager == 'npm' && matrix.page.republish == false }} 
-        cd ${{ matrix.page.path }}        
         npm install
         npx eslint
         npx webpack
 
     - name: Build with yarn
-      if: |
-        ${{ matrix.page.manager == 'yarn' && matrix.page.republish == false }}
+      if: ${{ matrix.page.manager == 'yarn' && matrix.page.republish == false }}
       run: |
         cd ${{ matrix.page.path }}        
         yarn install
