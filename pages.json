@@ -22,7 +22,7 @@
   },{
     "path": "3-events/image-gallery/",
     "name": "image-gallery",
-    "manager": "npm",
+    "manager": "yarn",
     "republish": false
   },{
     "path": "3-events/tasks/",
