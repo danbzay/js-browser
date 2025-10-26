@@ -57,7 +57,7 @@ jobs:
         echo ${{ matrix.page.republish }}; 
         wget --recursive --no-parent --no-host-directories --cut-dirs=2 \
              --directory-prefix=${{ matrix.page.path }}dist \
-             $HOME_URL${{ matrix.page.name }};
+             "$HOME_URL"${{ matrix.page.name }};
         ls -A
 
     - name: Use Node.js ${{ matrix.node-version }}
@@ -70,6 +70,8 @@ jobs:
       if: | 
         ${{ matrix.page.manager == 'npm' && matrix.page.republish == false }} 
       run: |
+        echo ${{  matrix.page.manager == 'npm' }};
+        echo ${{  matrix.page.republish == false }}; 
         cd ${{ matrix.page.path }}        
         npm install
         npx eslint
