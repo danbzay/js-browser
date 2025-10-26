@@ -17,7 +17,7 @@
   },{
     "path": "3-events/hit-game-finally/",
     "name": "hit-game-finally",
-    "manager": "jarn",
+    "manager": "yarn",
     "republish": false
   },{
     "path": "3-events/image-gallery/",
@@ -27,7 +27,7 @@
   },{
     "path": "3-events/tasks/",
     "name": "tasks",
-    "manager": "jarn",
+    "manager": "yarn",
     "republish": false
   }
 ]
