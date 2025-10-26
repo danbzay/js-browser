@@ -31,16 +31,6 @@ export class TaskList {
     this._pinnedTasksList.addEventListener('click', this.onPinTaskClick);
   }
 
-  filterHandler(text) {
-    this._renderItems(this._allTasksList, this._tasks.filter((task) => {
-      if (task.pinned === true) return;
-      const clean = text.trim().toLowerCase();
-      const taskName = task.node.textContent.toLowerCase();
-      this._inputText = clean;
-      return taskName.startsWith(clean);
-    }));
-  }
-
   _renderItems(list, items) {
     list.querySelector('span').classList.add('hidden');
     list.querySelectorAll('li').forEach((e) => {
@@ -53,11 +43,22 @@ export class TaskList {
     items.forEach(t => t.node.classList.remove('hidden'));
   }
 
+  filterHandler(text) {
+    this._renderItems(this._allTasksList, this._tasks.filter((task) => {
+      if (task.pinned === true) return;
+      const clean = text.trim().toLowerCase();
+      const taskName = task.node.textContent.toLowerCase();
+      this._inputText = clean;
+      return taskName.startsWith(clean);
+    }));
+  }
+
   submitHandler(text) {
     const task = new Task(text);
     this._allTasksList.appendChild(task.node);
     this._tasks.push(task);
     this._inputText = '';
+    this.filterHandler(this._inputText);
   }
 
   onAllTaskClick(e) {

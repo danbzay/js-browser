@@ -3,27 +3,27 @@
     "path": "2-DOM/hit-game/",
     "name": "hit-game",
     "manager": "npm",
-    "republish": false
+    "republish": true
   },{
     "path": "2-DOM/loading-sorting/",
     "name": "loading-sorting",
     "manager": "npm",
-    "republish": false
+    "republish": true
   },{
     "path": "2-DOM/loading-sorting-in-memory/",
     "name": "loading-sorting-in-memory",
     "manager": "npm",
-    "republish": false
+    "republish": true
   },{
     "path": "3-events/hit-game-finally/",
     "name": "hit-game-finally",
     "manager": "yarn",
-    "republish": false
+    "republish": true
   },{
     "path": "3-events/image-gallery/",
     "name": "image-gallery",
     "manager": "yarn",
-    "republish": false
+    "republish": true
   },{
     "path": "3-events/tasks/",
     "name": "tasks",
