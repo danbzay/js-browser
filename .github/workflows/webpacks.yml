@@ -8,75 +8,78 @@ env:
   HOME_URL: 'https://danbzay.github.io/js-browser'
       
 jobs:
+  configure:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set matrix data from pages.json
+        id: set-matrix
+        run: |
+          echo "matrix=$(jq -c . < ./pages.json)" >> $GITHUB_OUTPUT
+
+      - name: Create index.html
+        run: | 
+          cat index | \
+          sed -e '/\$/! s/^/echo \"/' -e '/\$/! s/$/\"/' -e '/\$/ s/\$//' | \
+          bash > home/index.html;
+          cat home/index.html;
+
+      - name: Upload index.html
+        id: deployment
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: home
+          name: home
+
   build:
     runs-on: ubuntu-latest
-
+    needs: configure
     strategy:
       matrix:
-        include:
-          - page-path: '2-DOM/hit-game/'
-            page-name: 'hit-game'  
-            node-version: 22.x
-            package-manager: 'npm'
-          - page-path: '2-DOM/loading-sorting/'
-            page-name: 'loading-sorting'
-            node-version: 22.x
-            package-manager: 'npm'
-          - page-path: '2-DOM/loading-sorting-in-memory/'
-            page-name: 'loading-sorting-in-memory'
-            node-version: 22.x
-            package-manager: 'npm'
-          - page-path: '3-events/hit-game-finally/'
-            page-name: 'hit-game-finally'
-            node-version: 22.x
-            package-manager: 'yarn'
-          - page-path: '3-events/tasks/'
-            page-name: 'tasks'
-            node-version: 22.x
-            package-manager: 'yarn'
-          - page-path: '3-events/image-gallery/'
-            page-name: 'image-gallery'
-            node-version: 22.x
-            package-manager: 'yarn'
-
-
-
+        page: ${{ fromJson(needs.configure.outputs.matrix) }}
+        include: 
+          - node-version: 22.x
+ 
     steps:
     - uses: actions/checkout@v4
       with:
           fetch-depth: 0
 
-    - name: Save old version if page actual
-      id: old_page
+    - name: Download published version of page
+      if: ${{ matrix.page.republish }} == true
       continue-on-error: true
-      run: |  
-        regex_page_path=$(echo "${{ matrix.page-path }}" | sed 's/[.\/]/\\&/g');
-        git show --dirstat --name-only HEAD; 
-        git show --dirstat --name-only HEAD | grep -e $regex_page_path -e workflows || ((
-            echo 'grep status='$?; 
-            wget -r --no-parent --no-host-directories --cut-dirs=2 -P ./${{ matrix.page-path }}dist $HOME_URL/${{ matrix.page-name }};
-            mv ./${{ matrix.page-path }}dist/${{ matrix.page-name }} ./${{ matrix.page-path }}dist/index.html
-          ) && (echo 'wget status='$?; echo 'saved=1' >> $GITHUB_OUTPUT));
-        ls -R;
+      run: |
+        wget --recursive --no-parent --no-host-directories --cut-dirs=2 
+             --directory-prefix=${{ matrix.page.path }}dist 
+             $HOME_URL${{ matrix.page.name }};
+        ls -A
 
     - name: Use Node.js ${{ matrix.node-version }}
-      if: steps.old_page.outputs.saved != 1
+      if: ${{ matrix.page.republish }} == false
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
    
-    - name: npm build
-      if: ${{ matrix.package-manager == 'npm' && steps.old_page.outputs.saved != 1 }}
+    - name: Build with npm
+      if: | 
+        ${{ matrix.page.manager == 'npm' && 
+        ${{ matrix.page.republish }} == false
       run: |
-        cd ${{ matrix.page-path }}        
+        cd ${{ matrix.page.path }}        
         npm install
         npx eslint
         npx webpack
 
-    - name: yarn build
-      if: ${{ matrix.package-manager == 'yarn' && steps.old_page.outputs.saved != 1 }}
+    - name: Build with yarn
+      if: |
+        ${{ matrix.page.manager == 'yarn' && 
+        ${{ matrix.page.republish }} == false
       run: |
-        cd ${{ matrix.page-path }}        
+        cd ${{ matrix.page.path }}        
         yarn install
         yarn eslint
         yarn webpack
@@ -85,8 +88,8 @@ jobs:
     - name: Upload Page Artifact
       uses: actions/upload-artifact@v4
       with:
-        path: ${{ matrix.page-path }}dist 
-        name: ${{ matrix.page-name }}
+        path: ${{ matrix.page.path }}dist 
+        name: ${{ matrix.page.name }}
 
   combine:
     runs-on: ubuntu-latest
@@ -96,26 +99,10 @@ jobs:
     - name: Download and Combine Pages
       uses: actions/download-artifact@v5
 
-    - name: Create home index.html
+    - name: Move index to root
       run: |
-        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">' > index.html
-        echo '<title>JS in Browser HomeWorks</title></head><body><ul>' >> index.html
-        ls -d */ | sed 's/\///g' > pages
-        echo 'pages:';
-        cat pages
-        cat */index.html | sed -E -e '/title/!d' -e 's/.*<title>(.*?)<\/title>.*/\1/g' > titles
-        echo 'titles:';
-        cat titles
-        paste -d $'\n' pages titles > mixed
-        echo 'mixed:';
-        cat mixed
-        sed -E -e '1~2s/(^.*?$)/<li><a href="\1">/g' -e '2~2s/(^.*?$)/\1<\/a><\/li>/g' mixed >> index.html
-        echo '</ul></body></html>' >> index.html 
-        cat index.html
-        rm pages titles mixed
-        
-    - name: Display structure of files
-      run: ls -R
+        ls -R;
+        mv home/* .;
 
     - name: Upload Combined Pages Artifact
       id: deployment
@@ -134,10 +121,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     
-    steps:
-    - name: Display structure of files
-      run: ls -R
-            
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
