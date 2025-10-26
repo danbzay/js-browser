@@ -55,8 +55,8 @@ jobs:
       continue-on-error: true
       run: |
         echo ${{ matrix.page.republish }}; 
-        wget --recursive --no-parent --no-host-directories --cut-dirs=2 
-             --directory-prefix=${{ matrix.page.path }}dist 
+        wget --recursive --no-parent --no-host-directories --cut-dirs=2 \
+             --directory-prefix=${{ matrix.page.path }}dist \
              $HOME_URL${{ matrix.page.name }};
         ls -A
 
@@ -68,8 +68,7 @@ jobs:
    
     - name: Build with npm
       if: | 
-        ${{ matrix.page.manager == 'npm' }} && 
-        ${{ matrix.page.republish == false }} 
+        ${{ matrix.page.manager == 'npm' && matrix.page.republish == false }} 
       run: |
         cd ${{ matrix.page.path }}        
         npm install
@@ -78,8 +77,7 @@ jobs:
 
     - name: Build with yarn
       if: |
-        ${{ matrix.page.manager == 'yarn' }} && 
-        ${{ matrix.page.republish == false }}
+        ${{ matrix.page.manager == 'yarn' && matrix.page.republish == false }}
       run: |
         cd ${{ matrix.page.path }}        
         yarn install
