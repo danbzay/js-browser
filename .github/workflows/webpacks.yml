@@ -23,6 +23,7 @@ jobs:
 
       - name: Create index.html
         run: | 
+          mkdir -p home;
           cat index | \
           sed -e '/\$/! s/^/echo \"/' -e '/\$/! s/$/\"/' -e '/\$/ s/\$//' | \
           bash > home/index.html;
