@@ -66,7 +66,7 @@ jobs:
    
     - name: Build with npm
       if: | 
-        ${{ matrix.page.manager == 'npm' && 
+        ${{ matrix.page.manager }} == 'npm' && 
         ${{ matrix.page.republish }} == false
       run: |
         cd ${{ matrix.page.path }}        
@@ -76,7 +76,7 @@ jobs:
 
     - name: Build with yarn
       if: |
-        ${{ matrix.page.manager == 'yarn' && 
+        ${{ matrix.page.manager }} == 'yarn' && 
         ${{ matrix.page.republish }} == false
       run: |
         cd ${{ matrix.page.path }}        
