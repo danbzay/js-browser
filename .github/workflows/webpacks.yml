@@ -67,11 +67,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
    
     - name: Build with npm
-      if: | 
-        ${{ matrix.page.manager == 'npm' && matrix.page.republish == false }} 
+      if: ${{ matrix.page.manager == 'npm' && matrix.page.republish == false }} 
       run: |
         echo ${{  matrix.page.manager == 'npm' }};
         echo ${{  matrix.page.republish == false }}; 
+        echo ${{ matrix.page.manager == 'npm' && matrix.page.republish == false }} 
         cd ${{ matrix.page.path }}        
         npm install
         npx eslint
