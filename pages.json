@@ -23,11 +23,11 @@
     "path": "3-events/image-gallery/",
     "name": "image-gallery",
     "manager": "yarn",
-    "republish": true
+    "republish": false
   },{
     "path": "3-events/tasks/",
     "name": "tasks",
     "manager": "yarn",
-    "republish": true
+    "republish": false
   }
 ]

@@ -54,9 +54,10 @@ jobs:
       if: ${{ matrix.page.republish == true }}
       continue-on-error: true
       run: |
+        cd ${{matrix.page.path }} 
         wget --recursive --no-parent --no-host-directories --cut-dirs=2 \
-             --directory-prefix=${{ matrix.page.path }}dist \
-             "$HOME_URL"${{ matrix.page.name }};
+             --directory-prefix=dist "$HOME_URL"${{ matrix.page.name }};
+        mv dist/${{ matrix.page.name }} dist/index.html 
         ls -R
 
     - name: Use Node.js ${{ matrix.node-version }}
