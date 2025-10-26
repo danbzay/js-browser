@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]    
 
 env:
-  HOME_URL: 'https://danbzay.github.io/js-browser'
+  HOME_URL: 'https://danbzay.github.io/js-browser/'
       
 jobs:
   configure:
@@ -51,24 +51,25 @@ jobs:
           fetch-depth: 0
 
     - name: Download published version of page
-      if: ${{ matrix.page.republish }} == true
+      if: ${{ matrix.page.republish == true }}
       continue-on-error: true
       run: |
+        echo ${{ matrix.page.republish }}; 
         wget --recursive --no-parent --no-host-directories --cut-dirs=2 
              --directory-prefix=${{ matrix.page.path }}dist 
              $HOME_URL${{ matrix.page.name }};
         ls -A
 
     - name: Use Node.js ${{ matrix.node-version }}
-      if: ${{ matrix.page.republish }} == false
+      if: ${{ matrix.page.republish == false }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
    
     - name: Build with npm
       if: | 
-        ${{ matrix.page.manager }} == 'npm' && 
-        ${{ matrix.page.republish }} == false
+        ${{ matrix.page.manager == 'npm' }} && 
+        ${{ matrix.page.republish == false }} 
       run: |
         cd ${{ matrix.page.path }}        
         npm install
@@ -77,8 +78,8 @@ jobs:
 
     - name: Build with yarn
       if: |
-        ${{ matrix.page.manager }} == 'yarn' && 
-        ${{ matrix.page.republish }} == false
+        ${{ matrix.page.manager == 'yarn' }} && 
+        ${{ matrix.page.republish == false }}
       run: |
         cd ${{ matrix.page.path }}        
         yarn install
