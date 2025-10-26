@@ -3,7 +3,7 @@
     "path": "2-DOM/hit-game/",
     "name": "hit-game",
     "manager": "npm",
-    "republish": true
+    "republish": false
   },{
     "path": "2-DOM/loading-sorting/",
     "name": "loading-sorting",
