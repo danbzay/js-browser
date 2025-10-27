@@ -106,7 +106,7 @@ jobs:
       id: deployment
       uses: actions/upload-pages-artifact@v4
       with:
-        path: ${{ github.workspace }}/publish      
+        path: ${{ github.workspace }}publish      
 
   deploy:
     runs-on: ubuntu-latest
