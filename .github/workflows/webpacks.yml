@@ -65,30 +65,30 @@ jobs:
         node-version: ${{ matrix.node-version }}
    
     - name: Build with npm
-      if: ${{ matrix.page.manager == 'npm' && matrix.page.build == true }} 
+      if: ${{ matrix.page.manager == 'npm'}} 
+      working-directory: ${{ matrix.page.path }}        
       run: |
-        cd ${{ matrix.page.path }}        
         npm install
         npx eslint
         npx webpack
-        cp -r dist/* $GITHUB_WORKSPACE/publish/${{ matrix.page.name }}/
 
     - name: Build with yarn
-      if: ${{ matrix.page.manager == 'yarn' && matrix.page.build == true }}
+      if: ${{ matrix.page.manager == 'yarn' }}
+      working-directory: ${{ matrix.page.path }}        
       run: |
-        cd ${{ matrix.page.path }}        
         yarn install
         yarn eslint
         yarn webpack
-        cp -r dist/* $GITHUB_WORKSPACE/publish/${{ matrix.page.name }}/
 
     - name: Push results to publish
       run: |
+        mkdir -p publish/ ${{ matrix.page.name }}
+        cp -r ${{ matrix.page.path }}dist/* ./publish/${{ matrix.page.name }}/
         git config --global user.name 'danbzay'
         git config --global user.email 'danbzay@gmail.com'
         git remote set-url origin https://x-access-token:${{ secrets.PAT_11 }}@github.com/${{ github.repository }}
         git pull;
-        git add ./publish;
+        git add ./publish/${{ matrix.page.name }};
         git commit -m 'automatic saving page for future';
         git push;
   
