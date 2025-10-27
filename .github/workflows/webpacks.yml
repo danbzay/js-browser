@@ -33,6 +33,7 @@ jobs:
           cat publish/index.html;
 
       - name: Push results to publish
+        continue-on-error: true
         run: |
           git config --global user.name 'danbzay'
           git config --global user.email 'danbzay@gmail.com'
