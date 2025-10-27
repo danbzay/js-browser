@@ -22,7 +22,7 @@ jobs:
       id: set-matrix
       run: |
         echo "matrix=$(jq -c '[.[] | select(.build == true)]' < ./pages.json)"
-        echo "fromJson(matrix)"
+        echo "fromJson($matrix)"
         echo "matrix=$(jq -c '[.[] | select(.build == true)]' < ./pages.json)" \          >> $GITHUB_OUTPUT
 
     - name: Create index.html
@@ -52,7 +52,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: configure
-    # if: ${{ needs.configure.outputs.matrix != [] }}
+    if: ${{ needs.configure.outputs.matrix != [] }}
     permissions:
       contents: write
     strategy:
