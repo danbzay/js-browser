@@ -22,8 +22,7 @@ jobs:
       - name: Set matrix data from pages.json
         id: set-matrix
         run: |
-          echo "matrix=$(jq -c '[.[] | select(.build == true)]' \ 
-          < ./pages.json)" >> $GITHUB_OUTPUT
+          echo "matrix=$(jq -c '[.[] | select(.build == true)]' < ./pages.json)" \          >> $GITHUB_OUTPUT
 
       - name: Create index.html
         run: | 
