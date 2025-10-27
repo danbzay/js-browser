@@ -40,8 +40,13 @@ jobs:
         git remote set-url origin https://x-access-token:${{ secrets.PAT_11 }}@github.com/${{ github.repository }}
         git pull;
         git add ./publish;
-        git status -uno --porcelain || \
-        (git commit -m 'automatic saving page for future'; git push;)
+        status=$(git status -uno --porcelain)
+        if [ -z "$status" ]; then
+          echo "status in empty"
+        else
+          git commit -m 'automatic saving page for future'
+          git push
+        fi
   
   build:
     runs-on: ubuntu-latest
@@ -91,9 +96,12 @@ jobs:
         git remote set-url origin https://x-access-token:${{ secrets.PAT_11 }}@github.com/${{ github.repository }}
         git pull;
         git add ./publish/${{ matrix.page.name }};
-        git status -uno --porcelain || \
-        (git commit -m 'automatic saving page for future'; git push;)
-  
+        if [ -z "$status" ]; then
+          echo "status in empty"
+        else
+          git commit -m 'automatic saving page for future'
+          git push
+        fi
   
   combine:
     runs-on: ubuntu-latest
@@ -108,7 +116,7 @@ jobs:
       id: deployment
       uses: actions/upload-pages-artifact@v4
       with:
-        path: ${{ github.workspace }}publish      
+        path: ${{ github.workspace }}/publish      
 
   deploy:
     runs-on: ubuntu-latest
