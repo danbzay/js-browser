@@ -13,12 +13,12 @@
     "path": "2-DOM/loading-sorting-in-memory/",
     "name": "loading-sorting-in-memory",
     "manager": "npm",
-    "build": true
+    "build": false
   },{
     "path": "3-events/hit-game-finally/",
     "name": "hit-game-finally",
     "manager": "yarn",
-    "build": true
+    "build": false
   },{
     "path": "3-events/image-gallery/",
     "name": "image-gallery",

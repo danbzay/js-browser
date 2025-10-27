@@ -16,8 +16,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     - name: Set matrix data from pages.json
       id: set-matrix
@@ -62,8 +61,6 @@ jobs:
  
     steps:
     - uses: actions/checkout@v4
-      with:
-          fetch-depth: 0
     
     - name: Use Node.js ${{ matrix.node-version }}
       if: ${{ matrix.page.build == true }}
@@ -110,9 +107,14 @@ jobs:
    
     steps:
     - uses: actions/checkout@v4
-      with:
-          fetch-depth: 0
 
+    - name: Update local files
+      run: |
+        git config --global user.name 'danbzay'
+        git config --global user.email 'danbzay@gmail.com'
+        git remote set-url origin https://x-access-token:${{ secrets.PAT_11 }}@github.com/${{ github.repository }}
+        git pull;
+ 
     - name: Upload Combined Pages Artifact
       id: deployment
       uses: actions/upload-pages-artifact@v4
