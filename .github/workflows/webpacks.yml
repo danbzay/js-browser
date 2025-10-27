@@ -49,6 +49,7 @@ jobs:
     permissions:
       contents: write
     strategy:
+      max-parallel: 1
       matrix:
         page: ${{ fromJson(needs.configure.outputs.matrix) }}
         include: 
