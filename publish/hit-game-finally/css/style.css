@@ -1,0 +1,36 @@
+/*!*********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/style.css ***!
+  \*********************************************************************/
+
+/*!****************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/components/hit-game/hit-game.css ***!
+  \****************************************************************************************/
+
+.board {
+ position: relative;
+  width: 480px;
+  height: 480px;  
+  cursor: url(../fa508ba78862ad8a00c6.png), auto;
+}
+.hammer-down {
+  cursor: url(../f212a811a2cd6cc46105.png), auto;
+}
+.hole { 
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  background-image: url("data:image/svg+xml,%3Csvg width=%27100%27 height=%27100%27 viewBox=%270 0 100 100%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2740%27 fill=%27grey%27/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.goblin {
+  position: absolute;
+}
+.game-over {
+  position: absolute;
+  width:80%;
+  top: 50%;
+  left: 10%;
+}
+
