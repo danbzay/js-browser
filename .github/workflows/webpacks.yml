@@ -41,7 +41,7 @@ jobs:
           git pull;
           git add ./publish;
           git commit -m 'automatic saving page for future';
-          git push;
+          git status -uno --porcelain || git push;
 
   build:
     runs-on: ubuntu-latest
@@ -92,7 +92,7 @@ jobs:
         git pull;
         git add ./publish/${{ matrix.page.name }};
         git commit -m 'automatic saving page for future';
-        git push;
+        git status -uno --porcelain || git push;
   
   combine:
     runs-on: ubuntu-latest
