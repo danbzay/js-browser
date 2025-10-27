@@ -96,6 +96,7 @@ jobs:
         git remote set-url origin https://x-access-token:${{ secrets.PAT_11 }}@github.com/${{ github.repository }}
         git pull;
         git add ./publish/${{ matrix.page.name }};
+        status=$(git status -uno --porcelain)
         if [ -z "$status" ]; then
           echo "status in empty"
         else

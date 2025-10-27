@@ -3,12 +3,12 @@
     "path": "2-DOM/hit-game/",
     "name": "hit-game",
     "manager": "npm",
-    "build": true
+    "build": false
   },{
     "path": "2-DOM/loading-sorting/",
     "name": "loading-sorting",
     "manager": "npm",
-    "build": true
+    "build": false
   },{
     "path": "2-DOM/loading-sorting-in-memory/",
     "name": "loading-sorting-in-memory",
@@ -23,11 +23,11 @@
     "path": "3-events/image-gallery/",
     "name": "image-gallery",
     "manager": "yarn",
-    "build": true
+    "build": false
   },{
     "path": "3-events/tasks/",
     "name": "tasks",
     "manager": "yarn",
-    "build": true
+    "build": false
   }
 ]
