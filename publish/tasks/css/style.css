@@ -1,0 +1,53 @@
+/*!*********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/style.css ***!
+  \*********************************************************************/
+body {
+    color: #333;
+}
+
+.input {
+    display: inline-block;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid #ced4da;
+}
+
+.hidden {
+    display: none;
+}
+
+/*!******************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/components/task-list/task-list.css ***!
+  \******************************************************************************************/
+.app {
+  width: 300px;
+  border: 1px solid lightgray;
+  font-size: 14px;
+}
+.app h1 {
+  font-size: 14px;
+  color: gray;
+}
+.app ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+.app ul li {
+  border: 1px solid lightgray;
+  border-radius:7px;
+  padding: 5px;
+  width: 260px;
+  padding-right: 15px;
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+.pinned-tasks-list li {
+  background-image: url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27%3E     %3Ccircle cx=%2712%27 cy=%2712%27 r=%2710%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%271%27/%3E     %3Cpolyline points=%274, 4 12, 20 20, 4%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%271%27/%3E     %3C/svg%3E");
+}
+.all-tasks-list li {
+  background-image: url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27%3E     %3Ccircle       cx=%2712%27 cy=%2712%27 r=%2710%27 fill=%27none%27 stroke=%27gray%27 stroke-width=%271%27/%3E     %3C/svg%3E");
+}
+
+
