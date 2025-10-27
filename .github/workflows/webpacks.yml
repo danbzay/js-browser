@@ -36,7 +36,7 @@ jobs:
         run: |
           git config --global user.name 'danbzay'
           git config --global user.email 'danbzay@gmail.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PAT_11 }}    @github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${{ secrets.PAT_11 }}@github.com/${{ github.repository }}
           git pull;
           git add ./publish;
           git commit -m 'automatic saving page for future';
@@ -86,7 +86,7 @@ jobs:
       run: |
         git config --global user.name 'danbzay'
         git config --global user.email 'danbzay@gmail.com'
-        git remote set-url origin https://x-access-token:${{ secrets.PAT_11 }}    @github.com/${{ github.repository }}
+        git remote set-url origin https://x-access-token:${{ secrets.PAT_11 }}@github.com/${{ github.repository }}
         git pull;
         git add ./publish;
         git commit -m 'automatic saving page for future';
