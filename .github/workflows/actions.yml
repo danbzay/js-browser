@@ -4,7 +4,6 @@ on:
   push:
     branches: [ "main" ]  
     paths: [ "pages.json" ]
-    paths-ignore: [ "publish" ]
 
 env:
   HOME_URL: 'https://danbzay.github.io/js-browser/'
