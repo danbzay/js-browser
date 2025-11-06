@@ -3,7 +3,9 @@ name: JavaScript in Browser Homeworks
 on:
   push:
     branches: [ "main" ]  
-    paths: [ "pages.json", ".github/workflows" ]
+    paths: 
+      - "pages.json"
+      - ".github/workflows/**" 
 
 env:
   HOME_URL: 'https://danbzay.github.io/js-browser/'
