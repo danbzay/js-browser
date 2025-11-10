@@ -7,18 +7,16 @@ export class HitGame {
     if(typeof board === 'string') {
       board = document.querySelector(board);
     }
-
-
     this._board = board;
     this._renderBoard();
-    this._hits = 0;
-    this._misses = 0;
-
+    this.messages = board.querySelector('.messages');
+    this.goblinHoleIndex = 16;
+    this.misses = 0;
     this.onBoardClick = this.onBoardClick.bind(this);
+    this._board.addEventListener('click', this.onBoardClick);
   }
 
   _renderBoard() {
-    this._board.classList.add('board');
     for (let i = 0; i < 16; i++) {
       let hole = document.createElement("div");
       hole.classList.add("hole");
@@ -28,48 +26,53 @@ export class HitGame {
   }
 
   start() {
-    this._goblinHead = new Image();
-    this._goblinHead.classList.add("goblin");
-    this._goblinHead.src = goblinImage;
-    this._board.addEventListener('click', this.onBoardClick);
-    this._goblinIntervalId = setInterval( () => {
-      let goblinHoleIndex = Math.floor(Math.random()*15);
-      this._board.querySelector(`[data-index="${ goblinHoleIndex }"]`)
-      .appendChild(this._goblinHead);
+    this.goblin = new Goblin(this._board);
+    this._goblinIntervalId = setInterval(() => {
+      if(this.goblin.head.parentNode && this.goblinHoleIndex != 16) { 
+        this.misses++; 
+      }
+      if (this.misses == 4) {
+        this.goblin.head.removeEventListener(
+          'click', this.goblin.onGoblinClick);
+        this.goblin.head.remove();
+        this.messages.textContent = '!!GAME OVER!!! You hit ' + 
+          this.goblin.hits + ' time' + (this.goblin.hits==1?'':'s');
+        clearInterval(this._goblinIntervalId);
+        return;
+      }
+      this.goblinHoleIndex = Math.floor(Math.random()*15);
+      this._board.querySelector(`[data-index="${ this.goblinHoleIndex }"]`)
+        .appendChild(this.goblin.head);
+      this.messages.textContent = 
+        'Hits:' + this.goblin.hits + ' Misses:' + this.misses;
     }, 1000);
   }
 
   onBoardClick() {
     this._board.classList.toggle('hammer-down');
-    if (this._goblinHead.matches(':hover')) {
-      this._hits++;
-    } else {
-      this._miss();
-    }
     this._timeout = setTimeout(() => {
       this._board.classList.toggle('hammer-down');
       clearTimeout(this._timeout);
     }, 100);
   }
-
-  _miss() {
-    if (this._misses == 4) {
-      this._gameOver();
-    } else {
-      this._misses++; 
-    }
-  }
-
-  _gameOver() {
-    this._goblinHead.remove();
-    clearInterval(this._goblinIntervalId);
-    this._board.removeEventListener('click', this.onBoardClick);
-    this._gameOverDiv = document.createElement('div');
-    this._gameOverDiv.appendChild(document.createTextNode(
-      `!!!GAME OVER!!! \n You hit ${this._hits} time${this._hits==1?'':'s'}`));
-    this._gameOverDiv.classList.add('game-over');
-    this._board.appendChild(this._gameOverDiv);
-
-  }
-
 }
+
+class Goblin {
+  constructor(board) {
+    this.head = new Image();
+    this.head.classList.add("goblin");
+    this.head.src = goblinImage;
+    this.head.alt = 'goblin';
+    this.onGoblinClick = this.onGoblinClick.bind(this);
+    this.head.addEventListener('click', this.onGoblinClick);
+    this._board = board;
+    this.hits = 0;
+  }
+
+  onGoblinClick() {
+    this.hits++;
+    this.head.remove();
+  }
+}
+
+

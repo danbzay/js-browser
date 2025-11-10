@@ -1,0 +1,29 @@
+.popover-toggle {
+  height: 200px;
+  position: relative;
+}
+.popover-toggle button {
+  position: absolute;
+  bottom: 0px;
+}
+.bubble {
+  position: absolute;
+  width: 100px;
+  z-index: 2;
+}
+.bubble div:first-child {
+  padding: 5px;  
+  border: 1px solid black;
+  border-radius: 5px;
+  background: white;
+}
+.bubble div:first-child h1, p{
+  font: 12px sans-serif; 
+} 
+.bubble div:last-child {
+  position: relative;
+  top: -1px;
+  height: 5px;
+  background: bottom no-repeat url('./img/poly.svg');
+  z-index: 3;
+}

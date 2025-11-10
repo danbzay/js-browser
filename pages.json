@@ -18,7 +18,7 @@
   },{
     "path": "3-events/hit-game-finally/",
     "name": "hit-game-finally",
-    "build": false,
+    "build": true,
     "script": "yarn install; yarn eslint; yarn webpack;"
   },{
     "path": "3-events/image-gallery/",
