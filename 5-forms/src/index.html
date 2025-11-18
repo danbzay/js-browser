@@ -4,16 +4,39 @@
     <meta charset="UTF-8">
     <title>5. Forms</title>
   </head>
-<body>
-  <form class="popover-toggle">
-    <button name="toggle" type="submit"> Click to toggle popover</button> 
-  </form> 
-  <div class='crm'>
-    <h1>Товары</h1>
-    <div class='goods'>
-      <ul></ul>
+  <body>
+
+    <form class="popover-toggle">
+      <button name="toggle" type="submit"> Click to toggle popover</button> 
+    </form> 
+
+    <div class="crm">
+      <h1>Товары<span class="create">+</span></h1>
+      <table class="products">
+        <thead>
+          <tr><th>Название</th><th>Стоимость</th><th>Действия</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
-  </div>
-</body>
+
+    <form class="trip-calendar">
+      <label>Откуда</label><input type="text">
+      <label> &uarr;&uarr; &darr;&darr;
+      <label>Kуда:</label><input type="text">
+      <label>Взрослые:</label><input type="number">
+      <label>Дети:</label><input type="number">
+      <label>Дети до 10 лет:</label><input type="number">
+      <label>Дети до 5 лет:</label><input type="number">
+      <label>Туда и обратно</label><input name="return" type="checkbox">
+      <label>Дата:</label><input name="outbound" type="date" required>
+      <div class="hide hidden">
+        <label for="inbound">Дата обратно:</label>
+        <input  name="inbound" type="date" required>
+      </div>
+
+      <button name="buy" type="submit">Купить билет</button>     
+    </form>
+  </body>
 </html>
 
