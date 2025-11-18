@@ -1,0 +1,95 @@
+/*!**********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/js/popover.css ***!
+  \**********************************************************************/
+.popover-toggle {
+  height: 200px;
+  position: relative;
+}
+.popover-toggle button {
+  position: absolute;
+  bottom: 0px;
+}
+.bubble {
+  position: absolute;
+  width: 100px;
+  z-index: 2;
+}
+.bubble div:first-child {
+  padding: 5px;  
+  border: 1px solid black;
+  border-radius: 5px;
+  background: white;
+}
+.bubble div:first-child h1, p{
+  font: 12px sans-serif; 
+} 
+.bubble div:last-child {
+  position: relative;
+  top: -1px;
+  height: 5px;
+  background: bottom no-repeat url(../7fdaee56ecb29bcda602.svg);
+  z-index: 3;
+}
+
+/*!******************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/js/crm.css ***!
+  \******************************************************************/
+.crm {
+  border: 1px solid gray;
+  width: 510px;
+  margin: 5px;
+}
+.crm :is(h1, table, th, form, label, input) {
+  width: 500px;
+  font: normal 20px sans-serif;
+}
+.products th:first-child {
+  width: 50%;
+}
+.create {
+  padding-left: 320px;
+  font-size: 30px;
+  color: gray;
+  cursor: pointer;
+}
+.read, .delete {
+  cursor: pointer;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.read {
+  background: url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27%3E     %3Cline x1=%271%27 y1=%2719%27 x2=%273%27 y2=%2717%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%271%27/%3E     %3Cline x1=%274%27 y1=%2716%27 x2=%2719%27 y2=%271%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3C/svg%3E");
+}
+.delete {
+  background: url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27%3E     %3Cline x1=%273%27 y1=%273%27 x2=%2717%27 y2=%2717%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3Cline x1=%2717%27 y1=%273%27 x2=%273%27 y2=%2717%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3C/svg%3E");
+}
+.product {
+  width: 500px;
+  position: relative;
+  z-index: 2;
+  top: -100px;
+  left: 100px;
+  border: solid grey 1px;
+  background: white;
+  padding:20px;
+}
+
+
+/*!****************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/js/trip-calendar.css ***!
+  \****************************************************************************/
+.trip-calendar {
+  margin: 20px;
+  width: 200px;
+  border: 1px solid gray;
+  padding: 5px;
+}
+.trip-calendar label {
+  width: 190px;
+  display: inline-block;
+}
+.hidden {
+  display: none;
+}
+
