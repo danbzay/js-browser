@@ -32,6 +32,7 @@ table.tickets {
   height: auto;
   border: 1px solid grey;
   padding: .5em; 
+  white-space: pre-wrap;
 }
 .tickets td:nth-child(1) { width: 1em; }
 .tickets td:nth-child(2) { width: 100%; }
@@ -77,4 +78,9 @@ table.tickets {
     %3Cline x1='17' y1='3' x2='3' y2='17' \
       fill='none' stroke='gray' stroke-width='2'/%3E \
     %3C/svg%3E");
+}
+
+.description:not(:empty) {
+  display: block;
+  margin-top: 1em;
 }

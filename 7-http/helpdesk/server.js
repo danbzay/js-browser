@@ -7,9 +7,19 @@ const app = new Koa();
 app.use(cors());
 app.use(body({ limit: '10kb', fallback: true }));
 
-const tickets = new Map([["1", {id: "1", name: "First", status: false, 
-  created: "0"}]]);
-const descriptions = new Map([["1", "Test ticket"]]);
+const tickets = new Map([
+  ["1", {id: "1", name: "Поменять краску в принтере", status: false, 
+  created: "1764248689717"}],
+  ["2", {id: "2", name: "Переустановить виндовс", status: false, 
+  created: "1764248897896"}],
+  ["3", {id: "3", name: "Установить обновление", status: false, 
+  created: "1764248925241"}]
+]);
+const descriptions = new Map([
+["1", "На зеленую"],
+["2", "А лучше поставить линукс"],
+["3", "КВ 50ХХХХ"],
+]);
 let maxId = Math.max([...tickets.keys()].map(k => Number(k))) || "1"; 
 
 // POST & PUT

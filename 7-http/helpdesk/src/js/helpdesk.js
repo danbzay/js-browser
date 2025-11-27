@@ -32,12 +32,9 @@ ticketForm.addEventListener('submit', async (ev) => {
       'Content-Type': 'application/json'}, 
       body: JSON.stringify({
         ticket: ticket,
-        description: ticketForm.elements.description.value, 
+        description: ticketForm.elements.description.value
       })
     })).json();
-    console.log(resj);
-    console.log('ticket ' + JSON.stringify(ticket));
-    console.log('ticketis ' + JSON.stringify(tickets.get(resj.id)));
     ticket = {...tickets.get(resj.id), ...ticket, ...resj};
     tickets.set(ticket.id, ticket); 
     ticketForm.remove();
@@ -98,8 +95,8 @@ fetch(URL).then(res => res.json())
 function renderTickets() {
   ticketsTb.innerHTML = [...tickets.values()].reduce((a, c) => a + 
     '<tr data-id="' + c.id + '"><td data-status=' + c.status + 
-    '></td><td data-full=false>' + c.name + 
-    '<br><span class="description"></span></td><td>' + 
+    '></td><td data-full=false><span class="name">' + c.name + 
+    '</span><span class="description"></span></td><td>' + 
     new Date(Number(c.created)).toISOString()
     .replace(/^\d\d(\d\d)-(\d\d)-(\d\d)T(\d\d:\d\d).*$/, '$3.$2.$1 $4') + 
     '</td><td class="read"></td><td class="delete"></td></tr>', '');
@@ -129,7 +126,8 @@ function renderTickets() {
             'Content-type': 'application/json'}
           })).json();
           console.log(resj);
-          r.cells[1].children[1].textContent = resj.description;
+          r.cells[1].querySelector('.description').textContent = 
+            resj.description;
           r.cells[1].dataset.full = "true"; 
         } catch (error) { 
           console.log(error);
