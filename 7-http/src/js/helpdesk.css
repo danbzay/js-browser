@@ -1,0 +1,80 @@
+.app {
+ width:50em;
+}
+.add-ticket {
+  margin: 1em 1em 1em auto;
+  display: block;
+}
+.app form {
+  width: 500px;
+  border: 1px solid grey;
+  position: relative;
+  z-index: 2;
+  top: -100px;
+  left: 100px;
+  background: white;
+  padding:20px;
+}
+.app form :is(input, textarea) {
+  width: 100%;
+  resize: none;
+}
+table.tickets {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+.tickets tr {
+  display:flex;
+  align-items: stretch;
+}
+.tickets td { 
+  height: auto;
+  border: 1px solid grey;
+  padding: .5em; 
+}
+.tickets td:nth-child(1) { width: 1em; }
+.tickets td:nth-child(2) { width: 100%; }
+.tickets td:nth-child(3) { width: 12em; }
+.tickets td:nth-child(4) { width: 1em; }
+.tickets td:nth-child(5) { width: 1em; }
+.read, .delete, [data-status]  {
+  cursor: pointer;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+[data-status=false] {
+  background: center top 0.7em no-repeat url("data:image/svg+xml, \
+    %3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E \
+    %3Ccircle cx='10' cy='10' r='5' \
+      fill='none' stroke='gray' stroke-width='2'/%3E \
+    %3C/svg%3E");
+}
+[data-status=true] {
+  background: center top .7em no-repeat url("data:image/svg+xml, \
+    %3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E \
+    %3Ccircle cx='10' cy='10' r='5' \
+      fill='none' stroke='gray' stroke-width='2'/%3E \
+    %3Cpolyline points='3,3 10,12 17,3' \
+      fill='none' stroke='gray' stroke-width='2'/%3E \
+    %3C/svg%3E");
+}
+.read {
+  background: center top .7em no-repeat url("data:image/svg+xml, \
+    %3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E \
+    %3Cline x1='1' y1='19' x2='3' y2='17' \
+      fill='none' stroke='gray' stroke-width='1'/%3E \
+    %3Cline x1='4' y1='16' x2='19' y2='1' \
+      fill='none' stroke='gray' stroke-width='2'/%3E \
+    %3C/svg%3E");
+}
+.delete {
+  background: center top .7em no-repeat url("data:image/svg+xml, \
+    %3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E \
+    %3Cline x1='3' y1='3' x2='17' y2='17' \
+      fill='none' stroke='gray' stroke-width='2'/%3E \
+    %3Cline x1='17' y1='3' x2='3' y2='17' \
+      fill='none' stroke='gray' stroke-width='2'/%3E \
+    %3C/svg%3E");
+}

@@ -1,0 +1,50 @@
+.trello {
+  display: flex;
+}
+.trello * {
+  font: 14px sans-serif;
+}
+.column {
+  margin: 1em;
+  width: 20%;
+  list-style-type: none;
+  background: WhiteSmoke;
+  padding: 0;
+}
+.trello textarea {
+  resize: none;
+  width: 100%;
+  border: 0;
+  white-space: pre-line;
+}
+
+.delete {
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  z-index: -1;
+}
+li {
+  padding: .5em;
+  margin: 1em;
+}
+li.add {
+  cursor: pointer;
+}
+li:not(.title, .add) {
+  position: relative;
+  background: white;
+  cursor: grab;
+}
+li:hover .delete{
+  z-index: 1;
+}
+.dragged {
+  opacity: .2;
+}
+.drop-target {
+  padding: 0;
+}
