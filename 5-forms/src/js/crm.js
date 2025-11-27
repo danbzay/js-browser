@@ -42,7 +42,7 @@ export class CRM {
     this.productsTable = this.crm.querySelector('.products tbody');
     this.renderProductsTable();
     this.productForm = this.createProductForm();
-
+    //Add product click
     this.crm.querySelector('.create').addEventListener('click', () => {
       this.selectedProductIndex = null;
       this.productForm.elements.name.value = '';
@@ -68,8 +68,11 @@ export class CRM {
       });
       //Add click event to delete element
       this.productsTable.children[i].children[2].children[1]
-      .addEventListener('click', () => 
-        this.productsTable.children[i].remove());
+      .addEventListener('click', () => { 
+        this.productsTable.children[i].remove();
+        products.splice(i, 1);
+        this.renderProductsTable();
+      });
     }
   }
 
