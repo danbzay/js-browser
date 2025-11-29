@@ -1,0 +1,53 @@
+.crm {
+  border: 1px solid gray;
+  width: 510px;
+  margin: 5px;
+}
+.crm :is(h1, table, th, form, label, input) {
+  width: 500px;
+  font: normal 20px sans-serif;
+}
+.products th:first-child {
+  width: 50%;
+}
+.create {
+  padding-left: 320px;
+  font-size: 30px;
+  color: gray;
+  cursor: pointer;
+}
+.read, .delete {
+  cursor: pointer;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.read {
+  background: url("data:image/svg+xml, \
+    %3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E \
+    %3Cline x1='1' y1='19' x2='3' y2='17' \
+      fill='none' stroke='gray' stroke-width='1'/%3E \
+    %3Cline x1='4' y1='16' x2='19' y2='1' \
+      fill='none' stroke='gray' stroke-width='2'/%3E \
+    %3C/svg%3E");
+}
+.delete {
+  background: url("data:image/svg+xml, \
+    %3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E \
+    %3Cline x1='3' y1='3' x2='17' y2='17' \
+      fill='none' stroke='gray' stroke-width='2'/%3E \
+    %3Cline x1='17' y1='3' x2='3' y2='17' \
+      fill='none' stroke='gray' stroke-width='2'/%3E \
+    %3C/svg%3E");
+}
+.product {
+  width: 500px;
+  position: relative;
+  z-index: 2;
+  top: -100px;
+  left: 100px;
+  border: solid grey 1px;
+  background: white;
+  padding:20px;
+}
+
