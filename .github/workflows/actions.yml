@@ -56,7 +56,9 @@ jobs:
     needs: configure
     if: ${{ fromJson(needs.configure.outputs.matrix) != '[]' }}
     steps:
-    - run: echo 'avoid error message if empty matrix'
+    - run: |
+        echo 'avoid error message if empty matrix';
+        echo 'matrix: ${{ fromJson(needs.configure.outputs.matrix) }};
 
   build:
     runs-on: ubuntu-latest
