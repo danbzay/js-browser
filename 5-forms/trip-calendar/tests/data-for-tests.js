@@ -1,4 +1,3 @@
-import { validation as crmValidation } from '../src/js/crm';
 import { validation as tripValidation } from '../src/js/trip-calendar';
 
 //remove spaces between tags
