@@ -12,7 +12,8 @@ const dragOverHandler = ev =>
 
 //drop card
 const dropHandler = ev => {
-  [cs, is] = ev.dataTransfer.getData('text').split(',').map(s => Number(s));
+  let [cs, is] = ev.dataTransfer.getData('text').split(',')
+    .map(s => Number(s));
   let ct = columns.indexOf(dropTarget.parentElement);
   let it = [...dropTarget.parentElement.children].indexOf(dropTarget);
   dropTarget.parentElement.insertBefore(dropSource, dropTarget);
@@ -57,7 +58,7 @@ function createCard(content, columnIndex, store=true) {
 //deleting card 
   li.innerHTML = content.replace(/\n/g, '<br>') +
     '<div class="delete">&#x2A2F;</div>';
-  li.querySelector('.delete').addEventListener('click', ev => {
+  li.querySelector('.delete').addEventListener('click', () => {
     storage[columnIndex]
       .splice([...li.parentElement.children].indexOf(li) - 1, 1);
     localStorage.setItem('trello', JSON.stringify(storage));
