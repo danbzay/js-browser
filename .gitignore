@@ -5,6 +5,7 @@ HELP.md
 doc
 dist
 *.un~
+.swp
 
 # Logs
 logs

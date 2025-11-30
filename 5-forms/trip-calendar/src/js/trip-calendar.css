@@ -1,0 +1,13 @@
+.trip-calendar {
+  margin: 20px;
+  width: 200px;
+  border: 1px solid gray;
+  padding: 5px;
+}
+.trip-calendar :is(label, input) {
+  width: 190px;
+  display: inline-block;
+}
+.hidden {
+  display: none;
+}
