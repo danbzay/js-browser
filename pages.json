@@ -8,7 +8,7 @@
   },{
     "path": "2-DOM/loading-sorting/",
     "name": "loading-sorting",
-    "build": false,
+    "build": true,
     "script": "npm install; npx eslint; npx webpack;"
   },{
     "path": "2-DOM/loading-sorting-in-memory/",
