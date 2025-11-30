@@ -16,7 +16,7 @@ export class ImageGallery {
 
     window.addEventListener('drop', ev => {
       [...ev.dataTransfer.items].some(item => item.kind === 'file') ? 
-        ev => preventDefault() : 0;
+        ev.preventDefault() : 0;
     });
     this.dropZone.addEventListener('dragover', ev => {
       console.log(ev);
