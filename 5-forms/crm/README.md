@@ -1,6 +1,6 @@
-[Результат](https://danbzay.github.io/js-browser/forms/crm)
-[Автотесты](https://github.com/danbzay/js-browser/actions/runs/19791977432/job/56706350904)
-[![JavaScript in browser Homeworks](https://github.com/danbzay/js-browser/actions/workflows/actions.yml/badge.svg)](https://github.com/danbzay/js-browser/actions/workflows/actions.yml)
+[Результат](https://danbzay.github.io/js-browser/forms/crm)  
+[Автотесты](https://github.com/danbzay/js-browser/actions/runs/19791977432/job/56706350904)  
+[![JavaScript in browser Homeworks](https://github.com/danbzay/js-browser/actions/workflows/actions.yml/badge.svg)](https://github.com/danbzay/js-browser/actions/workflows/actions.yml)  
 
 # Домашнее задание к занятию "Работа с HTML-формами"
 
