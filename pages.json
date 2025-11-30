@@ -58,7 +58,7 @@
   },{
     "path": "6-dnd/image-gallery/",
     "name": "image-gallery-dnd",
-    "build": false,
+    "build": true,
     "script": "yarn install; yarn eslint; yarn webpack;"
   }
 ]
