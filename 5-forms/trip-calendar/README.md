@@ -1,4 +1,8 @@
 
+[Результат](https://danbzay.github.io/js-browser/forms/trip-calendar)
+[Автотесты](https://github.com/danbzay/js-browser/actions/runs/19792148380/job/56706782085)
+[![JavaScript in browser Homeworks](https://github.com/danbzay/js-browser/actions/workflows/actions.yml/badge.svg)](https://github.com/danbzay/js-browser/actions/workflows/actions.yml)
+
 ### Trip Calendar* (задача со звёздочкой)
 
 Важно: эта задача не является обязательной. Её (не)выполнение не влияет на получение зачёта по ДЗ.

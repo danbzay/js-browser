@@ -48,7 +48,7 @@
   },{
     "path": "5-forms/trip-calendar/",
     "name": "trip-calendar",
-    "build": true,
+    "build": false,
     "script": "npm install; npx eslint; npx webpack; npx puppeteer browsers install firefox; npx jest;"
   },{
     "path": "6-dnd/trello/",
