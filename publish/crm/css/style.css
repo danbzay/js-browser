@@ -1,0 +1,45 @@
+/*!******************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/js/crm.css ***!
+  \******************************************************************/
+.crm {
+  border: 1px solid gray;
+  width: 510px;
+  margin: 5px;
+}
+.crm :is(h1, table, th, form, label, input) {
+  width: 500px;
+  font: normal 20px sans-serif;
+}
+.products th:first-child {
+  width: 50%;
+}
+.create {
+  padding-left: 320px;
+  font-size: 30px;
+  color: gray;
+  cursor: pointer;
+}
+.read, .delete {
+  cursor: pointer;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.read {
+  background: url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27%3E     %3Cline x1=%271%27 y1=%2719%27 x2=%273%27 y2=%2717%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%271%27/%3E     %3Cline x1=%274%27 y1=%2716%27 x2=%2719%27 y2=%271%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3C/svg%3E");
+}
+.delete {
+  background: url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27%3E     %3Cline x1=%273%27 y1=%273%27 x2=%2717%27 y2=%2717%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3Cline x1=%2717%27 y1=%273%27 x2=%273%27 y2=%2717%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3C/svg%3E");
+}
+.product {
+  width: 500px;
+  position: relative;
+  z-index: 2;
+  top: -100px;
+  left: 100px;
+  border: solid grey 1px;
+  background: white;
+  padding:20px;
+}
+
+
