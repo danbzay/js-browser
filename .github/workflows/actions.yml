@@ -51,10 +51,15 @@ jobs:
           git push
         fi
   
-  build:
+  exist:
     runs-on: ubuntu-latest
     needs: configure
     if: ${{ fromJson(needs.configure.outputs.matrix) != '[]' }}
+
+  build:
+    runs-on: ubuntu-latest
+    needs: exist
+    # if: ${{ fromJson(needs.configure.outputs.matrix) != '[]' }}
     permissions:
       contents: write
     strategy:
