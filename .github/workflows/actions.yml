@@ -58,7 +58,8 @@ jobs:
     steps:
     - run: |
         echo 'avoid error message if empty matrix';
-        echo 'matrix: ${{ needs.configure.outputs.matrix }}';
+        echo 'matrix: ${{ fromJson(needs.configure.outputs.matrix) }}';
+        echo 'matrix: ${{ toJson(needs.configure.outputs.matrix) }}';
 
   build:
     runs-on: ubuntu-latest
