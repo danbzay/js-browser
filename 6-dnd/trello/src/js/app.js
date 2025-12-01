@@ -83,7 +83,7 @@ function createCard(content, columnIndex, store=true) {
   });
 //storing card
   if (store) {
-    storage[columnIndex].push(li.firstChild.innerText);
+    storage[columnIndex].push(content);
     localStorage.setItem('trello', JSON.stringify(storage));
   }
 };
