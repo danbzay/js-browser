@@ -1,90 +1,91 @@
-const storage = JSON.parse(localStorage.getItem('trello'))  || [[],[],[]];
+const cards = new Map(JSON.parse(localStorage.getItem('trello')));
+let maxId = Math.max([...cards.keys()]);
+const saveCards = () => localStorage.setItem('trello', 
+  JSON.stringify([...cards.entries()])); 
 
-const columns = [...document.querySelectorAll('.column')];
-let dropSource;
+const columns = [...document.querySelectorAll('.cards')];
+
+//prepare place to drop 
 const dropTarget = document.createElement('li');
 dropTarget.classList.add('drop-target');
 dropTarget.addEventListener('dragover', ev => ev.preventDefault()); 
 
-//show place for drop
-const dragOverHandler = ev => 
+const dragOverHandler = ev =>   
     ev.target.parentElement.insertBefore(dropTarget, ev.target);
-
+  
 //drop card
 const dropHandler = ev => {
-  let [cs, is] = ev.dataTransfer.getData('text').split(',')
-    .map(s => Number(s));
-  let ct = columns.indexOf(dropTarget.parentElement);
-  let it = [...dropTarget.parentElement.children].indexOf(dropTarget);
-  dropTarget.parentElement.insertBefore(dropSource, dropTarget);
-  storage[cs].splice(is - 1, 1);
-  storage[ct].splice(it - 1, 0, dropSource.innerText);
+  let id = Number(ev.dataTransfer.getData('text'));
+  let targetColumn = columns.indexOf(dropTarget.parentElement);
+  let targetRow = [...dropTarget.parentElement.children].indexOf(dropTarget);
+  dropTarget.parentElement.insertBefore(
+    document.querySelector('[data-id="' + id + '"]'), dropTarget);
+  cards.set(id, {...cards.get(id), column: targetColumn, row: targetRow});
+  saveCards();
 };
-
-//recreating stored cards
-for (let i = 0; i < storage.length; i++) {
-  storage[i].forEach(content => createCard(content, i, false));
-}
 
 //adding another card
 const addCardHandler = ev => {
   ev.target.removeEventListener('click', addCardHandler);
-  ev.target.innerHTML = `
-    <textarea name="card-input" rows="3" required 
+  ev.target.innerHTML = 
+   `<textarea name="card-input" rows="3" required 
       placeholder="Enter a title for this card..."></textarea>
     <button type="button">Add Card</buton>`;
   ev.target.lastElementChild.addEventListener('click', () => {
     //do some replacement for safety
     let content = ev.target.firstElementChild.value.replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
-    createCard(content, ev.target.parentElement);  
+    addCard({id: null, content: content, 
+      column: columns.indexOf(ev.target.parentElement), 
+      row: ev.target.parentElement.children.length - 1
+    });  
     ev.target.innerHTML = '+ Add another card';
     ev.target.addEventListener('click', addCardHandler);
+    ev.target.addEventListener('dragover', dragOverHandler);
   });
 };
 
-//doing some initialization
 document.querySelectorAll('.add').forEach(li => {
   li.addEventListener('click', addCardHandler);
   li.addEventListener('dragover', dragOverHandler);
 });
 
-//creating card from content in column
-function createCard(content, columnIndex, store=true) {
-  columnIndex = typeof columnIndex === 'number' ? 
-    columnIndex : columns.indexOf(columnIndex);
+//render cards from storage
+[...cards.values()].sort((a, b)  => Number(a.row) - Number(b.row))
+  .forEach(card => addCard(card, false));
+
+function addCard(card, store=true) {
+  card.id ||= ++maxId; 
   const li = document.createElement('li');
-  columns[columnIndex].insertBefore(li, columns[columnIndex].lastElementChild);
-//deleting card 
-  li.innerHTML = content.replace(/\n/g, '<br>') +
-    '<div class="delete">&#x2A2F;</div>';
+  li.dataset.id = card.id;
+  li.innerHTML = card.content + '<div class="delete">&#x2A2F;</div>';
+  //place
+  columns[card.column].children[card.row]
+    .insertAdjacentElement('beforebegin', li);
+  //store
+  if (store) {
+    cards.set(card.id, card);  
+    saveCards();
+  }
+  //delete
   li.querySelector('.delete').addEventListener('click', () => {
-    storage[columnIndex]
-      .splice([...li.parentElement.children].indexOf(li) - 1, 1);
-    localStorage.setItem('trello', JSON.stringify(storage));
+    cards.delete(card.id, card);
     li.remove();
+    saveCards();
   });
   li.addEventListener('dragover', dragOverHandler);
   li.setAttribute('draggable', true);
-//dragging start
+  //dragging start
   li.addEventListener('dragstart', ev => {
-    dropSource = li;
-    dropSource.classList.add('dragged');
-    ev.dataTransfer.setData('text', columnIndex + ',' + 
-      [...dropSource.parentElement.children].indexOf(dropSource));
-    console.log(ev.dataTransfer.getData('text'));
-    dropTarget.style.height = dropSource.offsetHeight + 'px'; 
+    ev.dataTransfer.setData('text', card.id);
+    dropTarget.style.height = li.offsetHeight + 'px'; 
     dropTarget.addEventListener('drop', dropHandler);
-    dropSource.addEventListener('dragend', () => {
-      dropSource.classList.remove('dragged');
+    li.classList.add("dragged");
+    li.addEventListener('dragend', () => {
       dropTarget.removeEventListener('drop', dropHandler);
       dropTarget.remove();
+      li.classList.remove("dragged");
     });
   });
-//storing card
-  if (store) {
-    storage[columnIndex].push(content);
-    localStorage.setItem('trello', JSON.stringify(storage));
-  }
-};
+}
 
