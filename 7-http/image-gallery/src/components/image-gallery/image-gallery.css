@@ -1,0 +1,76 @@
+.drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 200px;
+  color: gray;
+  cursor: pointer;
+  border: 1px dashed grey;
+}
+.drop-zone input {
+  display: none;
+}
+.image-input-data {
+  font-size: 14px;
+  width: 40em;
+  padding: 1em;
+  border: 1px solid lightgray;
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.image-input-data > * {
+  margin-bottom: 1em;
+}
+.image-input-data > label {
+  width: 38em;
+  text-align: end;
+  padding-right: 38em;
+}
+.image-input-data > label > input  {
+  position: absolute;
+  width: 18em;
+  margin-left: 1em;
+}
+.image-input-data > input[name=submit] {
+  border-radius: 1em;
+  width: 10em;
+}
+
+.image-list {
+  list-style-type: none;
+}
+.image-list li {
+  display: inline-block;
+  position: relative;
+  margin: 2em;
+  border: 1px solid lightgrey;
+}
+.image-list li > * {
+  display: block;
+}
+.image-list li > img {
+  width: 200px;
+  height: 200px;
+  object-fit: scale-down;
+}
+.image-list .remover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background-image: url("data:image/svg+xml, \
+    %3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E \
+    %3Ccircle cx='15' cy='15' r='15' \
+      fill='white' stroke='gray' stroke-width='1'/%3E \
+    %3Cline x1='5' y1='5' x2='25' y2='25' \
+      fill='none' stroke='gray' stroke-width='1'/%3E \
+    %3Cline x1='25' y1='5' x2='5' y2='25' \
+      fill='none' stroke='gray' stroke-width='1'/%3E \
+    %3C/svg%3E");
+  z-index:1 ;
+  transform: translate(50%, -50%);
+}
