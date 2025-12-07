@@ -53,12 +53,17 @@
   },{
     "path": "6-dnd/trello/",
     "name": "trello",
-    "build": true,
+    "build": false,
     "script": "yarn install; yarn webpack;"
   },{
     "path": "6-dnd/image-gallery/",
     "name": "image-gallery-dnd",
-    "build": true,
+    "build": false,
     "script": "yarn install; yarn webpack;"
+  },{
+    "path": "7-http/helpdesk/",
+    "name": "helpdesk",
+    "build": true,
+    "script": "npm install; npx webpack;"
   }
 ]

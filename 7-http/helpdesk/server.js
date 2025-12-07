@@ -20,7 +20,8 @@ const descriptions = new Map([
 ["2", "А лучше поставить линукс"],
 ["3", "КВ 50ХХХХ"],
 ]);
-let maxId = Math.max([...tickets.keys()].map(k => Number(k))) || "1"; 
+let maxId = Math.max(...[...tickets.keys()].map(k => Number(k))) || 1; 
+console.log(maxId);
 
 // POST & PUT
 app.use(async (ctx, next) => {
