@@ -1,9 +1,12 @@
 import './helpdesk.css';
 
-
 const URL = 'http://localhost:3000';
-
+const ticketsTb = document.querySelector('.tickets tbody');
 const tickets = new Map();
+
+await fetchTickets();
+renderTickets();
+
 //Add or edit ticket form
 const ticketForm = document.createElement('form');
 ticketForm.classList.add('ticket');
@@ -26,7 +29,7 @@ ticketForm.addEventListener('submit', async (ev) => {
   let ticket = {id: ticketForm.dataset.id, 
     name: ticketForm.elements.name.value};
   try {
-    const resj = await (await fetch(URL, { 
+    const res = await fetch(URL, { 
       method: ticket.id === null ? 'POST' : 'PUT', 
       headers: {'Accept': 'application/json', 
       'Content-Type': 'application/json'}, 
@@ -34,10 +37,15 @@ ticketForm.addEventListener('submit', async (ev) => {
         ticket: ticket,
         description: ticketForm.elements.description.value
       })
-    })).json();
-    ticket = {...tickets.get(resj.id), ...ticket, ...resj};
-    tickets.set(ticket.id, ticket); 
+    });
+    if (!res.ok) {
+      throw new Error('HTTP error, status:' + res.status);
+    }
+    const resj = await res.json();
+    //ticket = {...tickets.get(resj.id), ...ticket, ...resj};
+    //tickets.set(ticket.id, ticket); 
     ticketForm.remove();
+    await fetchTickets();
     renderTickets();
     console.log('tickets:' + JSON.stringify([...tickets.values()]));
   } catch (error) {
@@ -86,12 +94,22 @@ confirmDeleteForm.elements.yes.addEventListener('click', async (ev) => {
   }
 });
 
-//Render tickets table
-const ticketsTb = document.querySelector('.tickets tbody');
-fetch(URL).then(res => res.json())
-  .then(resj => resj.forEach(t => tickets.set(t.id, t))) //tickets.values()
-  .then(() => renderTickets());
+//load tickets
+async function fetchTickets() {
+  try {
+    const res = await fetch(URL);
+    if (!res.ok) {
+      throw new Error('HTTP error, status:' + res.status);
+    }
+    const resj = await res.json();
+    resj.forEach(t => tickets.set(t.id, t)); //tickets.values()
+    renderTickets();
+  } catch (error) {
+    console.log(error);
+  }
+}
 
+//Render tickets table
 function renderTickets() {
   ticketsTb.innerHTML = [...tickets.values()].reduce((a, c) => a + 
     '<tr data-id="' + c.id + '"><td data-status=' + c.status + 
@@ -121,10 +139,14 @@ function renderTickets() {
     r.cells[1].addEventListener('click', async () => {
       if (r.cells[1].dataset.full === "false" ) {
         try {
-          const resj= await (await fetch(URL + '?id=' + r.dataset.id, {
+          const res = await fetch(URL + '?id=' + r.dataset.id, {
             method: 'GET', headers: {'Accept': 'application/json', 
             'Content-type': 'application/json'}
-          })).json();
+          });
+          if (!res.ok) {
+            throw new Error('HTTP error, status:' + res.status);
+          }
+          const resj = await res.json();
           console.log(resj);
           r.cells[1].querySelector('.description').textContent = 
             resj.description;
@@ -143,10 +165,14 @@ function renderTickets() {
         ticketForm.dataset.id = r.dataset.id;
         ticketForm.querySelector('h1').textContent = 
           'Изменить тикет #' + r.dataset.id;
-        const resj = await (await fetch(URL + '?id=' + r.dataset.id, {
+        const res = await (await fetch(URL + '?id=' + r.dataset.id, {
           method: 'GET', headers: {'Accept': 'application/json', 
           'Content-type': 'application/json'}
-        })).json();
+        }));
+        if (!res.ok) {
+          throw new Error('HTTP error, status:' + res.status);
+        }
+        const resj = await res.json();
         ticketForm.elements.name.value = resj.ticket.name;  
         ticketForm.elements.description.value = resj.description; 
       } catch (error) { 
