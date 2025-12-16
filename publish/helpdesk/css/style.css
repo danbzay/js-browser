@@ -1,0 +1,68 @@
+/*!***********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/js/helpdesk.css ***!
+  \***********************************************************************/
+.app {
+ width:50em;
+}
+.add-ticket {
+  margin: 1em 1em 1em auto;
+  display: block;
+}
+.app form {
+  width: 500px;
+  border: 1px solid grey;
+  position: relative;
+  z-index: 2;
+  top: -100px;
+  left: 100px;
+  background: white;
+  padding:20px;
+}
+.app form :is(input, textarea) {
+  width: 100%;
+  resize: none;
+}
+table.tickets {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+.tickets tr {
+  display:flex;
+  align-items: stretch;
+}
+.tickets td { 
+  height: auto;
+  border: 1px solid grey;
+  padding: .5em; 
+  white-space: pre-wrap;
+}
+.tickets td:nth-child(1) { width: 1em; }
+.tickets td:nth-child(2) { width: 100%; }
+.tickets td:nth-child(3) { width: 12em; }
+.tickets td:nth-child(4) { width: 1em; }
+.tickets td:nth-child(5) { width: 1em; }
+.read, .delete, [data-status]  {
+  cursor: pointer;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+[data-status=false] {
+  background: center top 0.7em no-repeat url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27%3E     %3Ccircle cx=%2710%27 cy=%2710%27 r=%275%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3C/svg%3E");
+}
+[data-status=true] {
+  background: center top .7em no-repeat url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27%3E     %3Ccircle cx=%2710%27 cy=%2710%27 r=%275%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3Cpolyline points=%273,3 10,12 17,3%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3C/svg%3E");
+}
+.read {
+  background: center top .7em no-repeat url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27%3E     %3Cline x1=%271%27 y1=%2719%27 x2=%273%27 y2=%2717%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%271%27/%3E     %3Cline x1=%274%27 y1=%2716%27 x2=%2719%27 y2=%271%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3C/svg%3E");
+}
+.delete {
+  background: center top .7em no-repeat url("data:image/svg+xml,     %3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27%3E     %3Cline x1=%273%27 y1=%273%27 x2=%2717%27 y2=%2717%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3Cline x1=%2717%27 y1=%273%27 x2=%273%27 y2=%2717%27       fill=%27none%27 stroke=%27gray%27 stroke-width=%272%27/%3E     %3C/svg%3E");
+}
+
+.description:not(:empty) {
+  display: block;
+  margin-top: 1em;
+}
+
